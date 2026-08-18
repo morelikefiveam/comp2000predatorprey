@@ -1,0 +1,49 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="v7xwcZSRmr-booNrgdAx">
+    <mxGraphModel dx="1030" dy="562" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="7f_bnWKHntj-AM78w669-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Creature&lt;/b&gt;&lt;div&gt;speed: Int&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;starvation: int&lt;/span&gt;&lt;/div&gt;&lt;div&gt;mealTime()&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="136" y="223" as="geometry" />
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Predator&lt;/b&gt;&lt;div&gt;hunting()&lt;/div&gt;&lt;div&gt;image()&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="14" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;prey&lt;/b&gt;&lt;div&gt;movement()&lt;/div&gt;&lt;div&gt;danger()&lt;/div&gt;&lt;div&gt;inDanger: Boolean&lt;/div&gt;&lt;div&gt;image()&lt;/div&gt;" vertex="1">
+          <mxGeometry height="79" width="120" x="256" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-4" edge="1" parent="1" source="7f_bnWKHntj-AM78w669-2" style="endArrow=block;html=1;rounded=0;entryX=0;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endFill=0;" target="7f_bnWKHntj-AM78w669-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="65" y="354" as="sourcePoint" />
+            <mxPoint x="115" y="304" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-6" edge="1" parent="1" source="7f_bnWKHntj-AM78w669-3" style="endArrow=block;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endFill=0;" target="7f_bnWKHntj-AM78w669-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="283" y="332" as="sourcePoint" />
+            <mxPoint x="333" y="282" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-7" edge="1" parent="1" source="7f_bnWKHntj-AM78w669-1" style="endArrow=block;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endFill=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="200" y="222" as="sourcePoint" />
+            <mxPoint x="300" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Entities&lt;/b&gt;&lt;div&gt;Location(int, int)&lt;/div&gt;&lt;div&gt;IsFood: Boolean&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="300" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Food&lt;/b&gt;&lt;div&gt;SpawnTimer: INT&lt;/div&gt;&lt;div&gt;Eaten: Boolean&lt;/div&gt;&lt;div&gt;isEdiable()&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="432" y="223" as="geometry" />
+        </mxCell>
+        <mxCell id="7f_bnWKHntj-AM78w669-10" edge="1" parent="1" source="7f_bnWKHntj-AM78w669-9" style="endArrow=block;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endFill=0;" target="7f_bnWKHntj-AM78w669-8" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="419" y="213" as="sourcePoint" />
+            <mxPoint x="469" y="163" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
