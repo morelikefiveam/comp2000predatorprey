@@ -1,10 +1,11 @@
 public class Creature extends Entity {
     int speed;
-    int starvation;
-
-    public Creature(int x, int y, int speed) {
-        super(x, y, false);
-        this.speed = speed; 
-    }
+    int hunger;
     
+
+    public Creature(int speed, int hunger, boolean isFood, int x, int y) {
+        super(x, y, isFood);
+        this.speed = speed;
+        this.hunger = hunger;
+    }
 }
