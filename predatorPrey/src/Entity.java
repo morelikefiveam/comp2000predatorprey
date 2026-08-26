@@ -20,4 +20,12 @@ public class Entity {
      public boolean isFood(){
         return isFood;
      }
+
+     public void setX(int x){
+        this.x = x;
+     }
+
+     public void setY(int y){
+        this.y = y;
+     }
 }
