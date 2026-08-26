@@ -3,11 +3,18 @@ public class Prey extends Creature {
 
     public Prey(int speed, int hunger, boolean isFood, int x, int y) {
         super(speed, hunger, isFood, x, y);
-        this.isFood = isFood;
-        
+        this.inDanger = false;
+    }
+
+    public boolean isInDanger(){
+        return inDanger;
+    }
+
+    public void setInDanger(boolean inDanger){
+        this.inDanger = inDanger;
     }
     
-    public void Movement() {
+    public void movement() {
 
     }
 
