@@ -1,10 +1,30 @@
-public class Grass extends Entity{
-    int growthTimer;
-    boolean isEaten;
+public class Food extends Entity{
+    private int growthTimer;
+    private boolean isEaten;
 
-    public Grass (int growthTimer, boolean isEaten){
-        super((int)(Math.random() * 100), (int)(Math.random() * 100), true);
-        this.growthTimer = 10;
+    public Food (int x, int y, int growthTimer){
+        super(x, y, true);
+        this.growthTimer = growthTimer;
+        this.isEaten = false;
+    }
+
+    public boolean isEdible(){
+        return !isEaten;
+    }
+
+    public int getGrowthTimer(){
+        return growthTimer;
+    }
+
+    public void setGrowthTimer(int growthTimer){
+        this.growthTimer = growthTimer;
+    }
+
+    public boolean isEaten(){
+        return isEaten;
+    }
+
+    public void setEaten(boolean isEaten){
         this.isEaten = isEaten;
     }
 }
