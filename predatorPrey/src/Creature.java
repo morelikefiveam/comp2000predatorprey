@@ -18,7 +18,7 @@ public abstract class Creature extends Entity {
 
     public abstract void reproduce();
 
-    
+    public abstract <E extends Entity> Optional<E> findClosest(List<E> targets); 
 
     public int getSpeed(){
         return speed;
