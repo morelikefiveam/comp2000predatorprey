@@ -1,13 +1,24 @@
-public class Creature extends Entity {
-    private int speed;
-    private int hunger;
-    
+import java.util.List;
+import java.util.Optional;
 
-    public Creature(int speed, int hunger, boolean isFood, int x, int y) {
+public abstract class Creature extends Entity {
+
+    protected int speed; 
+    protected int starvation;
+
+    public Creature(int speed, int starvation, boolean isFood, int x, int y) {
         super(x, y, isFood);
         this.speed = speed;
-        this.hunger = hunger;
+        this.starvation = starvation;
     }
+
+    public abstract void movement();
+
+    public abstract void eat();
+
+    public abstract void reproduce();
+
+    
 
     public int getSpeed(){
         return speed;
@@ -17,11 +28,11 @@ public class Creature extends Entity {
         this.speed = speed;
     }
 
-    public int getHunger(){
-        return hunger;
+    public int getStarvation(){
+        return starvation;
     }
 
-    public void setHunger(int hunger){
-        this.hunger = hunger;
+    public void setStarvation(int starvation){
+        this.starvation = starvation;
     }
 }
