@@ -16,5 +16,11 @@ public class Simulation {
         simStart.setResizable(false);
         simStart.setVisible(true);
 
+        JPanel panel = new JPanel();
+        JButton begin;
+        begin = new JButton("Start");
+
+        panel.add(begin);
+        simStart.add(panel);
     }
 }
