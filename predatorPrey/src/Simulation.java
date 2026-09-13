@@ -14,13 +14,13 @@ public class Simulation {
         simStart.setSize(800, 700);
         simStart.setLocationRelativeTo(null);
         simStart.setResizable(false);
-        simStart.setVisible(true);
 
         JPanel panel = new JPanel();
         JButton begin;
         begin = new JButton("Start");
-
+        
         panel.add(begin);
         simStart.add(panel);
+        simStart.setVisible(true);
     }
 }
