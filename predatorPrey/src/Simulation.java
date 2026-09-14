@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -62,7 +64,23 @@ public class Simulation {
     }
 
     public void repaintSim(){
-        
+        private static final int RENDER_INTERVAL_MS = 33;
+        private static final int TICKS_PER_LOGIC_UPDATE = 9;
+
+        Timer renderTimer = new Timer(RENDER_INTERVAL_MS, e-> {
+            frameCounter++;
+
+            for(Creature c : sim) {
+                c.movement();
+            }
+
+            if(frameCounter >= TICKS_PER_LOGIC_UPDATE){
+                runSimulationTick();
+                frameCounter = 0;
+            }
+
+            repaint();
+        })
     }
 
 
