@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,6 +32,7 @@ public class Simulation{
     private  int frameCounter = 0;
 
     List<Creature> sim;
+    List<Grass> grassList;
 
     //Necessary JFrame stuff to make things visiable
     private JFrame simStart;
@@ -72,7 +74,7 @@ public class Simulation{
         begin.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e){ // Close start frame open active/running frame
                 simStart.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 runningSim = new JFrame("Predator, Prey Simulation. RUNNING");
 
@@ -82,19 +84,33 @@ public class Simulation{
                 runningSim.setSize(800, 700);
 
                 runningSim.setVisible(true);
+
+                runningSim.getContentPane().setBackground(new java.awt.Color(18, 84, 13));
                 System.out.println("Button"); 
             }
         });
-        savePred.addActionListener(new ActionListener() {
+        savePred.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start pred
             @Override 
             public void actionPerformed(ActionEvent e){
                 int input = Integer.parseInt(predAmount.getText());
                 for(int i = 0; i < input; i++){
                     sim.add(new Predator(10, 10, 10, 10, sim) { });
+                    System.out.println("predator added: " + i + " times"); //Doesn't work nor my brain
+                }
+            }
+        });
+        savePrey.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start prey
+            @Override
+            public void actionPerformed(ActionEvent e){
+                int input = Integer.parseInt(preyAmount.getText());
+                for(int i = 0; i < input; i++){
+                    sim.add(new Prey(10, 10, 10, 10, sim, grassList));
                 }
             }
         });
 
+
+        //Building the first JFrame
         panel.add(begin);
         panel.add(warning);
         panel.add(pred);
@@ -108,9 +124,11 @@ public class Simulation{
         simStart.setVisible(true);
     }
 
-    public void runSimulationTick(){
+    public void runSimulationTick(){ // implement later
 
     }
+
+// ***COME BACK TO LATER*** ps: currently a mess
 
    /*  public void timeSetup(){
 
