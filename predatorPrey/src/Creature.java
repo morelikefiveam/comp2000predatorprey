@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +92,14 @@ public abstract class Creature extends Entity {
         return starvation;
     }
 
-    
+    protected <E extends Creature> Optional<E> findNearestInRange(List<E> candidates, int range) {
+        List<E> withinRange = new ArrayList<>();
+        for (E c : candidates) {
+            if (Math.hypot(getX() - c.getX(), getY() - c.getY()) <= range) {
+                withinRange.add(c);
+            }
+        }
+        return findClosest(withinRange);
+    }
     
 }
