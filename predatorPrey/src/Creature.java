@@ -7,6 +7,8 @@ public abstract class Creature extends Entity {
     private int starvation;
     private int lastX;
     private int lastY;
+    private int dx = 1;
+    private int dy = 1;
 
     private static final int STARVATION_THRESHOLD = 100;
 
@@ -36,6 +38,23 @@ public abstract class Creature extends Entity {
 
     public int getVelocityY(){
         return getY() - lastY;
+    }
+
+    protected void moveWithBounce(int panelWidth, int panelHeight){
+        int newX = getX() + dx * getSpeed();
+        int newY = getY() + dy * getSpeed();
+
+        if (newX < 0 || newX > panelWidth - 20) {
+            dx = -dx;
+            newX = getX() + dx * getSpeed();
+        }
+        if (newY < 0 || newY > panelHeight - 20) {
+            dy = -dy;
+            newY = getY() + dy * getSpeed();
+        }
+
+        setX(Math.max(0, Math.min(newX, panelWidth - 20)));
+        setY(Math.max(0, Math.min(newY, panelHeight - 20)));
     }
 
     public void resetStarvation(){
