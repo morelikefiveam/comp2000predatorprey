@@ -44,21 +44,18 @@ public class Prey extends Creature {
 
     @Override 
     public void movement() {
-        Creature nearestThreat = null;
-        double nearestDist = Double.MAX_VALUE;
+        List<Predator> predatorCandidates = new ArrayList<>();
         for (Creature c : sim) {
-            if (c instanceof Predator) {
-                double d = Math.hypot(getX() - c.getX(), getY() - c.getY());
-                if (d <= THREAT_RANGE && d < nearestDist) {
-                    nearestDist = d;
-                    nearestThreat = c;
-                }
+            if (c instanceof Predator p) {
+                predatorCandidates.add(p);
             }
         }
 
-        if (nearestThreat != null) {
+        Optional<Predator> nearestThreat = findNearestInRange(predatorCandidates, THREAT_RANGE);
+
+        if (nearestThreat.isPresent()) {
             setInDanger(true);
-            flee(nearestThreat);
+            flee(nearestThreat.get());
             recordPosition();
             return;
         }

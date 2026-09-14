@@ -27,14 +27,14 @@ public class Predator extends Creature {
 
     @Override 
     public void movement() {
-    List<Creature> preyCandidates = new ArrayList<>();
+    List<Prey> preyCandidates = new ArrayList<>();
         for (Creature c : sim) {
-            if (c instanceof Prey && Math.hypot(getX() - c.getX(), getY() - c.getY()) <= DETECTION_RANGE) {
-                preyCandidates.add(c);
+            if (c instanceof Prey p) {
+                preyCandidates.add(p);
             }
         }
 
-        Optional<Creature> nearest = findClosest(preyCandidates);
+        Optional<Prey> nearest = findNearestInRange(preyCandidates, DETECTION_RANGE);
 
         if (nearest.isPresent()) {
             pursue(nearest.get());
