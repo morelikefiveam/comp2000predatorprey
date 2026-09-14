@@ -25,6 +25,19 @@ public abstract class Creature extends Entity {
         return starvation >= STARVATION_THRESHOLD;
     }
 
+    protected void recordPosition(){
+        lastX = getX();
+        lastY = getY();
+    }
+
+    public int getVelocityX(){
+        return getX() - lastX;
+    }
+
+    public int getVelocityY(){
+        return getY() - lastY;
+    }
+
     public void resetStarvation(){
         starvation = 0;
     }
