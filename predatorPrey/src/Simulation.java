@@ -16,17 +16,6 @@ import java.awt.event.ActionListener;
 
 public class Simulation{
 
-    public static void main(String[] args) throws Exception {
-        List<Creature> sim = new ArrayList<>();
-        List<Grass> grassList = new ArrayList<>();
-
-        Simulation mainSim = new Simulation();
-        mainSim.frameInitialise();
-
-        
-
-    }
-
     private static final int RENDER_INTERVAL_MS = 33;
     private static final int TICKS_PER_LOGIC_UPDATE = 9;
     private  int frameCounter = 0;
@@ -49,8 +38,22 @@ public class Simulation{
     private int entPreyAmount;
     private JLabel warning;
 
-    public Simulation(){ //Our JFrame simulation constructor
-        frameInitialise();
+    public static void main(String[] args) throws Exception {
+        List<Creature> sim = new ArrayList<>();
+        List<Grass> grassList = new ArrayList<>();
+
+        Simulation mainSim = new Simulation(sim);
+        mainSim.frameInitialise();
+
+        
+
+    }
+
+
+
+    public Simulation(List<Creature> sim){ //Our JFrame simulation constructor
+        this.sim = sim;
+        //frameInitialise();
     }
 
     public void frameInitialise(){ // How we setup the JFramse and make it work
@@ -90,9 +93,9 @@ public class Simulation{
             }
         });
         savePred.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start pred
-            @Override 
             public void actionPerformed(ActionEvent e){
-                int input = Integer.parseInt(predAmount.getText());
+                String strInput = predAmount.getText();
+                int input = Integer.parseInt(strInput);
                 for(int i = 0; i < input; i++){
                     sim.add(new Predator(10, 10, 10, 10, sim) { });
                     System.out.println("predator added: " + i + " times"); //Doesn't work nor my brain
@@ -100,11 +103,12 @@ public class Simulation{
             }
         });
         savePrey.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start prey
-            @Override
             public void actionPerformed(ActionEvent e){
-                int input = Integer.parseInt(preyAmount.getText());
+                String strInput = preyAmount.getText();
+                int input = Integer.parseInt(strInput);
                 for(int i = 0; i < input; i++){
                     sim.add(new Prey(10, 10, 10, 10, sim, grassList));
+                    System.out.println("Prey added: " + i + " Times");
                 }
             }
         });
@@ -128,6 +132,16 @@ public class Simulation{
 
     }
 
+    public void repaint(){ // implement soon
+    
+    }
+
+
+
+
+
+
+// ---------------------------------------------------//
 // ***COME BACK TO LATER*** ps: currently a mess
 
    /*  public void timeSetup(){
