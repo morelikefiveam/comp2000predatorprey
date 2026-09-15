@@ -132,6 +132,16 @@ public class Simulation{
 
     }
 
+    public void repaint(){ // implement soon
+    
+    }
+
+
+
+
+
+
+// ---------------------------------------------------//
 // ***COME BACK TO LATER*** ps: currently a mess
 
    /*  public void timeSetup(){
