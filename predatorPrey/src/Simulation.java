@@ -53,7 +53,7 @@ public class Simulation{
 
     public Simulation(List<Creature> sim){ //Our JFrame simulation constructor
         this.sim = sim;
-        frameInitialise();
+        //frameInitialise();
     }
 
     public void frameInitialise(){ // How we setup the JFramse and make it work
@@ -103,11 +103,12 @@ public class Simulation{
             }
         });
         savePrey.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start prey
-            @Override
             public void actionPerformed(ActionEvent e){
-                int input = Integer.parseInt(preyAmount.getText());
+                String strInput = preyAmount.getText();
+                int input = Integer.parseInt(strInput);
                 for(int i = 0; i < input; i++){
                     sim.add(new Prey(10, 10, 10, 10, sim, grassList));
+                    System.out.println("Prey added: " + i + " Times");
                 }
             }
         });
