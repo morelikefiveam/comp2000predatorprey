@@ -2,32 +2,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-
 public class Predator extends Creature {
     private List<Creature> sim;
     private static final int DETECTION_RANGE = 200;
+    private static final int EAT_RADIUS = 22;
+    private static final int REPRODUCE_THRESHOLD = 20;
 
     public Predator(int speed, int hunger, int x, int y, List<Creature> sim) {
         super(speed, hunger, false, x, y);
         this.sim = sim;
     }
 
-    @Override 
+    @Override
     protected int getStarvationRate(){
         return 3; //Predators require more energy to hunt so starvation rate is higher
     }
 
-    @Override 
+    @Override
     public void eat() {
-        resetStarvation();
+        List<Prey> preyCandidates = new ArrayList<>();
+        for (Creature c : sim) {
+            if (c instanceof Prey p) {
+                preyCandidates.add(p);
+            }
+        }
 
-        // TODO: Needs further work
+        Optional<Prey> closest = findClosest(preyCandidates);
+        closest.ifPresent(prey -> {
+            double dist = Math.hypot(getX() - prey.getX(), getY() - prey.getY());
+            if (dist <= EAT_RADIUS){
+                sim.remove(prey);
+                resetStarvation();
+            }
+        });
     }
 
-    @Override 
+    @Override
+    public void reproduce() {
+        if (sim == null){
+            throw new IllegalStateException("Cannot reproduce: no simulation list assigned");
+        }
+        if (getStarvation() <= REPRODUCE_THRESHOLD) {
+            Predator offspring = new Predator(getSpeed(), 0, getX(), getY(), sim);
+            sim.add(offspring);
+        }
+    }
+
+    @Override
     public void movement() {
-    List<Prey> preyCandidates = new ArrayList<>();
+        List<Prey> preyCandidates = new ArrayList<>();
         for (Creature c : sim) {
             if (c instanceof Prey p) {
                 preyCandidates.add(p);
@@ -39,7 +62,7 @@ public class Predator extends Creature {
         if (nearest.isPresent()) {
             pursue(nearest.get());
         } else {
-            moveWithBounce(800, 600);
+            moveWithBounce(); //to fix later 
         }
         recordPosition();
     }
@@ -69,10 +92,5 @@ public class Predator extends Creature {
 
         setX(getX() + moveX);
         setY(getY() + moveY);
-    }
-
-    @Override 
-    public void reproduce() {
-        //TODO
     }
 }
