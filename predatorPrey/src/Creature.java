@@ -13,6 +13,11 @@ public abstract class Creature extends Entity {
 
     private static final int STARVATION_THRESHOLD = 100;
 
+    // Sets world size, shares with rendering panel
+    public static final int WORLD_WIDTH = 1200;
+    public static final int WORLD_HEIGHT = 800;
+    protected static final int SIZE = 20;
+
     public Creature(int speed, int starvation, boolean isFood, int x, int y) {
         super(x, y, isFood);
         this.speed = speed;
@@ -41,21 +46,28 @@ public abstract class Creature extends Entity {
         return getY() - lastY;
     }
 
-    protected void moveWithBounce(int panelWidth, int panelHeight){
+    protected void moveWithBounce(){
         int newX = getX() + dx * getSpeed();
         int newY = getY() + dy * getSpeed();
 
-        if (newX < 0 || newX > panelWidth - 20) {
+        if (newX < 0 || newX > WORLD_WIDTH - SIZE) {
             dx = -dx;
             newX = getX() + dx * getSpeed();
         }
-        if (newY < 0 || newY > panelHeight - 20) {
+        if (newY < 0 || newY > WORLD_HEIGHT - SIZE) {
             dy = -dy;
             newY = getY() + dy * getSpeed();
         }
 
-        setX(Math.max(0, Math.min(newX, panelWidth - 20)));
-        setY(Math.max(0, Math.min(newY, panelHeight - 20)));
+        setX(Math.max(0, Math.min(newX, WORLD_WIDTH - SIZE)));
+        setY(Math.max(0, Math.min(newY, WORLD_HEIGHT - SIZE)));
+    }
+
+    // Keeps a creature inside the visible world after any direct setX/setY movement
+    // (pursue, flee, grazing, etc). Call this after positioning logic that isn't moveWithBounce.
+    protected void clampToWorld(){
+        setX(Math.max(0, Math.min(getX(), WORLD_WIDTH - SIZE)));
+        setY(Math.max(0, Math.min(getY(), WORLD_HEIGHT - SIZE)));
     }
 
     public void resetStarvation(){
