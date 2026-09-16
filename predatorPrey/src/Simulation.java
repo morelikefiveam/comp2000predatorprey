@@ -57,7 +57,6 @@ public class Simulation{
     public Simulation(List<Creature> sim){ //Our JFrame simulation constructor
         this.sim = sim;
         this.grassList = new ArrayList<>(); 
-        frameInitialise();
     }
 
     public void frameInitialise(){ // How we setup the JFramse and make it work
