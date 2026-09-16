@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
 
 public class Simulation{
 
@@ -44,6 +47,11 @@ public class Simulation{
     private int entPredAmount;
     private int entPreyAmount;
     private JLabel warning;
+    private JPanel row1;
+    private JPanel row2;
+    private JPanel row3;
+    private JPanel row4;
+
 
     public static void main(String[] args) throws Exception {
         List<Creature> sim = new ArrayList<>();
@@ -76,6 +84,12 @@ public class Simulation{
         preyAmount = new JTextField(10);
         savePred = new JButton("Save");
         savePrey = new JButton("Save");
+
+        row1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        row2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        row3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        row4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        Dimension rowSize = new Dimension(800, 80);
         
         begin.addActionListener(new ActionListener() {
 
@@ -144,14 +158,29 @@ public class Simulation{
 
 
         //Building the first JFrame
-        panel.add(begin);
-        panel.add(warning);
-        panel.add(pred);
-        panel.add(prey);
-        panel.add(predAmount);
-        panel.add(preyAmount);
-        panel.add(savePred);
-        panel.add(savePrey);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(80, 20, 20, 20));
+        row1.add(begin);
+        row1.setMaximumSize(rowSize);
+
+        row2.add(warning);
+        row2.setMaximumSize(rowSize);
+
+        row3.add(pred);
+        row3.add(predAmount);
+        row3.add(savePred);
+        row3.setMaximumSize(rowSize);
+
+        row4.add(prey);
+        row4.add(preyAmount);
+        row4.add(savePrey);
+        row4.setMaximumSize(rowSize);
+
+        panel.add(row1);
+        panel.add(row2);
+        panel.add(row3);
+        panel.add(row4);
+        
         simStart.add(panel, BorderLayout.CENTER);
         simStart.add(panel);
         simStart.setVisible(true);
