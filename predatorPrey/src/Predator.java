@@ -9,7 +9,7 @@ public class Predator extends Creature {
     private static final int DETECTION_RANGE = 200;
     private static final int EAT_RADIUS = 22;
     private static final int REPRODUCE_THRESHOLD = 20;
-    private static final double REPRODUCE_CHANCE = 0.05;
+    private static final double REPRODUCE_CHANCE = 0.08;
     private static final int HUNT_THRESHOLD = 60;
 
     public Predator(int speed, int hunger, int x, int y, List<Creature> sim) {

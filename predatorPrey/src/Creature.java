@@ -16,8 +16,8 @@ public abstract class Creature extends Entity {
     private static final int STARVATION_THRESHOLD = 100;
 
     // Sets world size, shares with rendering
-    public static final int WORLD_WIDTH = 1200;
-    public static final int WORLD_HEIGHT = 800;
+    public static final int WORLD_WIDTH = 1800;
+    public static final int WORLD_HEIGHT = 1200;
     protected static final int SIZE = 20;
 
     public Creature(int speed, int starvation, boolean isFood, int x, int y) {
