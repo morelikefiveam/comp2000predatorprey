@@ -108,7 +108,13 @@ public class Simulation{
         savePred.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start pred
             public void actionPerformed(ActionEvent e){
                 String strInput = predAmount.getText();
-                int input = Integer.parseInt(strInput);
+                int input;
+                try {
+                    input = Integer.parseInt(strInput);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid predator amount: " + strInput);
+                    return;
+                }
                 for(int i = 0; i < input; i++){
                     int x = random.nextInt(Creature.WORLD_WIDTH - 20);
                     int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
@@ -120,7 +126,13 @@ public class Simulation{
         savePrey.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start prey
             public void actionPerformed(ActionEvent e){
                 String strInput = preyAmount.getText();
-                int input = Integer.parseInt(strInput);
+                int input;
+                try {
+                    input = Integer.parseInt(strInput);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid prey amount: " + strInput);
+                    return;
+                }
                 for(int i = 0; i < input; i++){
                     int x = random.nextInt(Creature.WORLD_WIDTH - 20);
                     int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
