@@ -7,6 +7,7 @@ public class Predator extends Creature {
     private static final int DETECTION_RANGE = 200;
     private static final int EAT_RADIUS = 22;
     private static final int REPRODUCE_THRESHOLD = 20;
+    private static final int HUNT_THRESHOLD = 40;
 
     public Predator(int speed, int hunger, int x, int y, List<Creature> sim) {
         super(speed, hunger, false, x, y);
@@ -15,7 +16,7 @@ public class Predator extends Creature {
 
     @Override
     protected int getStarvationRate(){
-        return 3; //Predators require more energy to hunt so starvation rate is higher
+        return 2; //Predators require more energy to hunt so starvation rate is higher
     }
 
     @Override
@@ -50,6 +51,12 @@ public class Predator extends Creature {
 
     @Override
     public void movement() {
+        if (getStarvation() < HUNT_THRESHOLD) { //Predators only hunt when their hunger goes over the starvation threshold
+            moveWithBounce();
+            recordPosition();
+            return;
+        }
+
         List<Prey> preyCandidates = new ArrayList<>();
         for (Creature c : sim) {
             if (c instanceof Prey p) {
@@ -62,7 +69,7 @@ public class Predator extends Creature {
         if (nearest.isPresent()) {
             pursue(nearest.get());
         } else {
-            moveWithBounce(); //to fix later 
+            moveWithBounce();
         }
         recordPosition();
     }
