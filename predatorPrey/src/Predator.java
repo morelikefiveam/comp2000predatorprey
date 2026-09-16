@@ -20,7 +20,7 @@ public class Predator extends Creature {
 
     @Override
     protected int getStarvationRate(){
-        return 2; //Predators require more energy to hunt so starvation rate is higher
+        return 3; //Predators require more energy to hunt so starvation rate is higher
     }
 
     @Override

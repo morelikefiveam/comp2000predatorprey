@@ -4,7 +4,7 @@
  
 - Fill in movement, eat and reproduce stubs
 - Write prey chase / eat logic
-- Alter speed based on hunger (UNSURE)
+- Alter speed based on hunger (UNSURE) - Corbin - made fleeing cause more starvation
 - Decide how predator causes Prey to go into inDanger
 
 ## Prey

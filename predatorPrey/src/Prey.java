@@ -11,7 +11,8 @@ public class Prey extends Creature {
     private static final int THREAT_RANGE = 120;
     private static final double FLEE_SPEED_MULTIPLIER = 1.8;
     private static final int EAT_RADIUS = 10;
-    private static final double REPRODUCE_CHANCE = 0.10;
+    private static final double REPRODUCE_CHANCE = 0.05;
+    private int starvationRate = 1;
 
     public Prey(int speed, int hunger,  int x, int y, List<Creature> sim, List<Grass> grassList) {
         super(speed, hunger, false, x, y);
@@ -113,7 +114,10 @@ public class Prey extends Creature {
 
     @Override
     protected int getStarvationRate(){
-        return 1; //Prey conserve energy more effectively
+        if (isInDanger()) {
+            return starvationRate * 2; // Prey starve faster when fleeing
+        }
+        return starvationRate; 
     }
 
     @Override

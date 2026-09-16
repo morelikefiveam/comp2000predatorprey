@@ -1,13 +1,16 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 public class Grass extends Entity{
     private int growthTimer;
-    private final int maxGrowthTimer;
+    private final int maxGrowthTimer = 1000;
     private boolean isEaten;
 
-    public Grass (int x, int y, int growthTimer){
+    public Grass (int x, int y, int growthTimer, boolean isEaten) {
         super(x, y, true);
         this.growthTimer = growthTimer;
-        this.maxGrowthTimer = growthTimer;
-        this.isEaten = false;
+        this.isEaten = isEaten;
     }
 
     public boolean isEdible(){
