@@ -1,16 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +20,10 @@ public class Simulation{
 
     private static final int RENDER_INTERVAL_MS = 33;
     private static final int TICKS_PER_LOGIC_UPDATE = 9;
+    private static final int STARTING_GRASS = 60;
+    private static final int GRASS_GROWTH_TIME = 150; // logic ticks for eaten grass to regrow
     private  int frameCounter = 0;
+    private final Random random = new Random();
 
     List<Creature> sim;
     List<Grass> grassList;
@@ -30,6 +35,8 @@ public class Simulation{
     private JButton savePred;
     private JButton savePrey;
     private JFrame runningSim;
+    private SimPanel simPanel;
+    private Timer gameTimer;
     private JLabel pred;
     private JLabel prey;
     private JTextField predAmount;
@@ -40,19 +47,16 @@ public class Simulation{
 
     public static void main(String[] args) throws Exception {
         List<Creature> sim = new ArrayList<>();
-        List<Grass> grassList = new ArrayList<>();
 
         Simulation mainSim = new Simulation(sim);
         mainSim.frameInitialise();
-
-        
-
     }
 
 
 
     public Simulation(List<Creature> sim){ //Our JFrame simulation constructor
         this.sim = sim;
+        this.grassList = new ArrayList<>(); // was never assigned before - grass had nowhere to live
         //frameInitialise();
     }
 
@@ -78,36 +82,51 @@ public class Simulation{
 
             @Override
             public void actionPerformed(ActionEvent e){ // Close start frame open active/running frame
+                spawnGrass();
+
                 simStart.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
                 runningSim = new JFrame("Predator, Prey Simulation. RUNNING");
 
                 simStart.dispose();
                 simStart.setVisible(false);
 
-                runningSim.setSize(800, 700);
+                // Panel size comes straight from Creature.WORLD_WIDTH/HEIGHT. Bounds for Entities match frame
+                
+                simPanel = new SimPanel();
+                simPanel.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, Creature.WORLD_HEIGHT));
+                simPanel.setBackground(new java.awt.Color(18, 84, 13));
+                runningSim.add(simPanel, BorderLayout.CENTER);
 
+                runningSim.setResizable(false);
+                runningSim.pack();
+                runningSim.setLocationRelativeTo(null);
                 runningSim.setVisible(true);
 
-                runningSim.getContentPane().setBackground(new java.awt.Color(18, 84, 13));
                 System.out.println("Button"); 
+
+                startGameLoop();
             }
         });
-        savePred.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start pred
+        savePred.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e){
                 String strInput = predAmount.getText();
                 int input = Integer.parseInt(strInput);
                 for(int i = 0; i < input; i++){
-                    sim.add(new Predator(10, 10, 10, 10, sim) { });
-                    System.out.println("predator added: " + i + " times"); //Doesn't work nor my brain
+                    int x = random.nextInt(Creature.WORLD_WIDTH - 20);
+                    int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
+                    sim.add(new Predator(10, 10, x, y, sim) { });
+                    System.out.println("predator added: " + i + " times"); 
                 }
             }
         });
-        savePrey.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start prey
+        savePrey.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e){
                 String strInput = preyAmount.getText();
                 int input = Integer.parseInt(strInput);
                 for(int i = 0; i < input; i++){
-                    sim.add(new Prey(10, 10, 10, 10, sim, grassList));
+                    int x = random.nextInt(Creature.WORLD_WIDTH - 20);
+                    int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
+                    sim.add(new Prey(10, 10, x, y, sim, grassList));
                     System.out.println("Prey added: " + i + " Times");
                 }
             }
@@ -128,62 +147,76 @@ public class Simulation{
         simStart.setVisible(true);
     }
 
-    public void runSimulationTick(){ // implement later
-
+    private void spawnGrass(){
+        for (int i = 0; i < STARTING_GRASS; i++){
+            int x = random.nextInt(Creature.WORLD_WIDTH - 10);
+            int y = random.nextInt(Creature.WORLD_HEIGHT - 10);
+            grassList.add(new Grass(x, y, GRASS_GROWTH_TIME));
+        }
     }
 
-    public void repaint(){ // implement soon
-    
-    }
-
-
-
-
-
-
-// ---------------------------------------------------//
-// ***COME BACK TO LATER*** ps: currently a mess
-
-   /*  public void timeSetup(){
-
-        Timer renderTimer = new Timer();
-        TimerTask repainting = new TimerTask(){
+    // Drives movement + catching for every frame in the sim
+    private void startGameLoop(){
+        gameTimer = new Timer(RENDER_INTERVAL_MS, new ActionListener() {
             @Override
-            public void run(){
-                for(Creature c : sim) {
+            public void actionPerformed(ActionEvent e){
+                List<Creature> snapshot = new ArrayList<>(sim);
+                for (Creature c : snapshot) {
                     c.movement();
+                    c.eat();
                 }
 
-                if(frameCounter >= TICKS_PER_LOGIC_UPDATE){
+                frameCounter++;
+                if (frameCounter >= TICKS_PER_LOGIC_UPDATE) {
                     runSimulationTick();
                     frameCounter = 0;
                 }
+
+                repaint();
             }
-            //frameCounter++; **Come back to later**
-
-        if(frameCounter >= TICKS_PER_LOGIC_UPDATE){
-            runSimulationTick();
-            frameCounter = 0;
-        }
-
-        repaint();  
-        };
-
-        frameCounter++;
-        
-
-
-        for(Creature c : sim) {
-            c.movement();
-        }
-
-        if(frameCounter >= TICKS_PER_LOGIC_UPDATE){
-            runSimulationTick();
-            frameCounter = 0;
-        }
-
-        repaint();
+        });
+        gameTimer.start();
     }
 
-*/
+    public void runSimulationTick(){ // starvation + grass regrowth
+        List<Creature> snapshot = new ArrayList<>(sim);
+        List<Creature> toRemove = new ArrayList<>();
+
+        for (Creature c : snapshot) {
+            if (c.starve()) {
+                toRemove.add(c);
+            }
+        }
+        sim.removeAll(toRemove);
+
+        for (Grass g : grassList) {
+            g.tickGrowth();
+        }
+    }
+
+    public void repaint(){
+        if (simPanel != null) {
+            simPanel.repaint();
+        }
+    }
+
+    // Green dots for grass, blue for prey and red for predators
+    private class SimPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            g.setColor(new Color(80, 200, 80));
+            for (Grass grass : grassList) {
+                if (grass.isEdible()) {
+                    g.fillOval(grass.getX(), grass.getY(), 8, 8);
+                }
+            }
+
+            for (Creature c : new ArrayList<>(sim)) {
+                g.setColor(c instanceof Predator ? Color.RED : Color.BLUE);
+                g.fillOval(c.getX(), c.getY(), 20, 20);
+            }
+        }
+    }
 }

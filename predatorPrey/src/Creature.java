@@ -13,7 +13,7 @@ public abstract class Creature extends Entity {
 
     private static final int STARVATION_THRESHOLD = 100;
 
-    // Sets world size, shares with rendering panel
+    // Sets world size, shares with rendering
     public static final int WORLD_WIDTH = 1200;
     public static final int WORLD_HEIGHT = 800;
     protected static final int SIZE = 20;
@@ -64,7 +64,6 @@ public abstract class Creature extends Entity {
     }
 
     // Keeps a creature inside the visible world after any direct setX/setY movement
-    // (pursue, flee, grazing, etc). Call this after positioning logic that isn't moveWithBounce.
     protected void clampToWorld(){
         setX(Math.max(0, Math.min(getX(), WORLD_WIDTH - SIZE)));
         setY(Math.max(0, Math.min(getY(), WORLD_HEIGHT - SIZE)));
