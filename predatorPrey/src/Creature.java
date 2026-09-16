@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public abstract class Creature extends Entity {
 
@@ -8,9 +9,10 @@ public abstract class Creature extends Entity {
     private int starvation;
     private int lastX;
     private int lastY;
-    private int dx = 1;
-    private int dy = 1;
+    private int dx;
+    private int dy;
 
+    private static final Random random = new Random();
     private static final int STARVATION_THRESHOLD = 100;
 
     // Sets world size, shares with rendering
@@ -24,6 +26,8 @@ public abstract class Creature extends Entity {
         this.starvation = starvation;
         this.lastX = x;
         this.lastY = y;
+        this.dx = random.nextBoolean() ? 1 : -1;
+        this.dy = random.nextBoolean() ? 1 : -1;
     }
 
     protected abstract int getStarvationRate();

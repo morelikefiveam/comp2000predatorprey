@@ -56,8 +56,8 @@ public class Simulation{
 
     public Simulation(List<Creature> sim){ //Our JFrame simulation constructor
         this.sim = sim;
-        this.grassList = new ArrayList<>(); // was never assigned before - grass had nowhere to live
-        //frameInitialise();
+        this.grassList = new ArrayList<>(); 
+        frameInitialise();
     }
 
     public void frameInitialise(){ // How we setup the JFramse and make it work
@@ -90,7 +90,6 @@ public class Simulation{
                 simStart.dispose();
                 simStart.setVisible(false);
 
-                // Panel size comes straight from Creature.WORLD_WIDTH/HEIGHT. Bounds for Entities match frame
                 
                 simPanel = new SimPanel();
                 simPanel.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, Creature.WORLD_HEIGHT));
@@ -107,19 +106,19 @@ public class Simulation{
                 startGameLoop();
             }
         });
-        savePred.addActionListener(new ActionListener() { 
+        savePred.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start pred
             public void actionPerformed(ActionEvent e){
                 String strInput = predAmount.getText();
                 int input = Integer.parseInt(strInput);
                 for(int i = 0; i < input; i++){
                     int x = random.nextInt(Creature.WORLD_WIDTH - 20);
                     int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
-                    sim.add(new Predator(10, 10, x, y, sim) { });
-                    System.out.println("predator added: " + i + " times"); 
+                    sim.add(new Predator(10, 0, x, y, sim) { });
+                    System.out.println("predator added: " + i + " times"); //Doesn't work nor my brain
                 }
             }
         });
-        savePrey.addActionListener(new ActionListener() { 
+        savePrey.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amout of start prey
             public void actionPerformed(ActionEvent e){
                 String strInput = preyAmount.getText();
                 int input = Integer.parseInt(strInput);
@@ -155,7 +154,7 @@ public class Simulation{
         }
     }
 
-    // Drives movement + catching for every frame in the sim
+
     private void startGameLoop(){
         gameTimer = new Timer(RENDER_INTERVAL_MS, new ActionListener() {
             @Override
@@ -200,7 +199,7 @@ public class Simulation{
         }
     }
 
-    // Green dots for grass, blue for prey and red for predators
+    // Minimal rendering: green dots for grass, blue circles for prey, red for predators.
     private class SimPanel extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
