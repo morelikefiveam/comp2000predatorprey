@@ -113,7 +113,7 @@ public class Simulation{
                 for(int i = 0; i < input; i++){
                     int x = random.nextInt(Creature.WORLD_WIDTH - 20);
                     int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
-                    sim.add(new Predator(10, 0, x, y, sim) { });
+                    sim.add(new Predator(5, 0, x, y, sim) { });
                     System.out.println("predator added: " + i + " times"); //Doesn't work nor my brain
                 }
             }
@@ -125,7 +125,7 @@ public class Simulation{
                 for(int i = 0; i < input; i++){
                     int x = random.nextInt(Creature.WORLD_WIDTH - 20);
                     int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
-                    sim.add(new Prey(10, 10, x, y, sim, grassList));
+                    sim.add(new Prey(5, 10, x, y, sim, grassList));
                     System.out.println("Prey added: " + i + " Times");
                 }
             }
@@ -177,7 +177,7 @@ public class Simulation{
         gameTimer.start();
     }
 
-    public void runSimulationTick(){ // starvation + grass regrowth
+    public void runSimulationTick(){ // starvation + reproduction + grass regrowth
         List<Creature> snapshot = new ArrayList<>(sim);
         List<Creature> toRemove = new ArrayList<>();
 
@@ -187,6 +187,11 @@ public class Simulation{
             }
         }
         sim.removeAll(toRemove);
+
+        List<Creature> reproSnapshot = new ArrayList<>(sim);
+        for (Creature c : reproSnapshot) {
+            c.reproduce();
+        }
 
         for (Grass g : grassList) {
             g.tickGrowth();
