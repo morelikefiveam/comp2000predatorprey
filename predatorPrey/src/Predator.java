@@ -1,12 +1,15 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class Predator extends Creature {
     private List<Creature> sim;
+    private static final Random random = new Random();
     private static final int DETECTION_RANGE = 200;
     private static final int EAT_RADIUS = 22;
     private static final int REPRODUCE_THRESHOLD = 20;
+    private static final double REPRODUCE_CHANCE = 0.05;
     private static final int HUNT_THRESHOLD = 60;
 
     public Predator(int speed, int hunger, int x, int y, List<Creature> sim) {
@@ -43,7 +46,7 @@ public class Predator extends Creature {
         if (sim == null){
             throw new IllegalStateException("Cannot reproduce: no simulation list assigned");
         }
-        if (getStarvation() <= REPRODUCE_THRESHOLD) {
+        if (getStarvation() <= REPRODUCE_THRESHOLD && random.nextDouble() < REPRODUCE_CHANCE) {
             Predator offspring = new Predator(getSpeed(), 0, getX(), getY(), sim);
             sim.add(offspring);
             addStarvation(REPRODUCE_THRESHOLD);
