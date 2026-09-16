@@ -77,6 +77,10 @@ public abstract class Creature extends Entity {
         starvation = 0;
     }
 
+    protected void addStarvation(int amount){
+        starvation += amount;
+    }
+
     public abstract void movement();
     public abstract void eat();
     public abstract void reproduce();

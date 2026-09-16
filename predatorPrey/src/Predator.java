@@ -46,6 +46,7 @@ public class Predator extends Creature {
         if (getStarvation() <= REPRODUCE_THRESHOLD) {
             Predator offspring = new Predator(getSpeed(), 0, getX(), getY(), sim);
             sim.add(offspring);
+            addStarvation(REPRODUCE_THRESHOLD);
         }
     }
 
