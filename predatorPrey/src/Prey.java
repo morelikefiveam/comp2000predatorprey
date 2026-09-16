@@ -26,7 +26,6 @@ public class Prey extends Creature {
     }
 
     private static final int REPRODUCE_THRESHOLD = 20;
-    
     @Override
     public void reproduce() {
         if (sim == null){
@@ -83,6 +82,7 @@ public class Prey extends Creature {
             int moveY = (int) Math.round((diffY / dist) * getSpeed());
             setX(getX() + moveX);
             setY(getY() + moveY);
+            clampToWorld();
         });
 
         recordPosition();
@@ -103,6 +103,7 @@ public class Prey extends Creature {
 
         setX(getX() + moveX);
         setY(getY() + moveY);
+        clampToWorld();
     }
 
     @Override

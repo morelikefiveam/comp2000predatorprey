@@ -92,5 +92,6 @@ public class Predator extends Creature {
 
         setX(getX() + moveX);
         setY(getY() + moveY);
+        clampToWorld();
     }
 }
