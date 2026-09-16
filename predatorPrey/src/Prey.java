@@ -11,7 +11,7 @@ public class Prey extends Creature {
     private static final int THREAT_RANGE = 120;
     private static final double FLEE_SPEED_MULTIPLIER = 1.8;
     private static final int EAT_RADIUS = 10;
-    private static final double REPRODUCE_CHANCE = 0.15;
+    private static final double REPRODUCE_CHANCE = 0.10;
 
     public Prey(int speed, int hunger,  int x, int y, List<Creature> sim, List<Grass> grassList) {
         super(speed, hunger, false, x, y);
@@ -65,6 +65,7 @@ public class Prey extends Creature {
         setInDanger(false);
 
         if (getStarvation() < GRAZE_THRESHOLD) {
+            moveWithBounce();
             recordPosition();
             return;
         }

@@ -20,8 +20,8 @@ public class Simulation{
 
     private static final int RENDER_INTERVAL_MS = 33;
     private static final int TICKS_PER_LOGIC_UPDATE = 9;
-    private static final int STARTING_GRASS = 60;
-    private static final int GRASS_GROWTH_TIME = 150; // logic ticks for eaten grass to regrow
+    private static final int STARTING_GRASS = 150;
+    private static final int GRASS_GROWTH_TIME = 100; // logic ticks for eaten grass to regrow
     private  int frameCounter = 0;
     private final Random random = new Random();
 

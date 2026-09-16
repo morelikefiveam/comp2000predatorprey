@@ -10,7 +10,8 @@ public class Predator extends Creature {
     private static final int EAT_RADIUS = 22;
     private static final int REPRODUCE_THRESHOLD = 20;
     private static final double REPRODUCE_CHANCE = 0.08;
-    private static final int HUNT_THRESHOLD = 60;
+    private static final int HUNT_THRESHOLD = 70;
+    private static final double HUNT_SPEED_MULTIPLIER = 2.2; // clear edge over Prey's FLEE_SPEED_MULTIPLIER (1.8)
 
     public Predator(int speed, int hunger, int x, int y, List<Creature> sim) {
         super(speed, hunger, false, x, y);
@@ -24,6 +25,10 @@ public class Predator extends Creature {
 
     @Override
     public void eat() {
+        if (getStarvation() < HUNT_THRESHOLD) {
+            return;
+        }
+
         List<Prey> preyCandidates = new ArrayList<>();
         for (Creature c : sim) {
             if (c instanceof Prey p) {
@@ -82,10 +87,12 @@ public class Predator extends Creature {
         int velX = target.getVelocityX();
         int velY = target.getVelocityY();
 
+        double huntSpeed = getSpeed() * HUNT_SPEED_MULTIPLIER;
+
         double distance = Math.hypot(target.getX() - getX(), target.getY() - getY());
         if (distance == 0) return;
 
-        double lookAheadTicks = Math.min(distance / getSpeed(), 10);
+        double lookAheadTicks = Math.min(distance / huntSpeed, 10);
         int predictedX = target.getX() + (int) (velX * lookAheadTicks);
         int predictedY = target.getY() + (int) (velY * lookAheadTicks);
 
@@ -94,7 +101,7 @@ public class Predator extends Creature {
         double dist = Math.hypot(diffX, diffY);
         if (dist == 0) return;
 
-        double moveDistance = Math.min(getSpeed(), dist);
+        double moveDistance = Math.min(huntSpeed, dist);
         int moveX = (int) Math.round((diffX / dist) * moveDistance);
         int moveY = (int) Math.round((diffY / dist) * moveDistance);
 
