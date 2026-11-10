@@ -29,17 +29,10 @@ public class Predator extends Creature {
             return;
         }
 
-        List<Prey> preyCandidates = new ArrayList<>();
-        for (Creature c : sim) {
-            if (c instanceof Prey p) {
-                preyCandidates.add(p);
-            }
-        }
-
-        Optional<Prey> closest = findClosest(preyCandidates);
+        Optional<Prey> closest = findClosest(ofType(sim, Prey.class));
         closest.ifPresent(prey -> {
             double dist = Math.hypot(getX() - prey.getX(), getY() - prey.getY());
-            if (dist <= EAT_RADIUS){
+            if (dist <= EAT_RADIUS) {
                 sim.remove(prey);
                 resetStarvation();
             }
