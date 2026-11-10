@@ -1,7 +1,9 @@
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Creature extends Entity {
 
@@ -85,19 +87,24 @@ public abstract class Creature extends Entity {
     public abstract void eat();
     public abstract void reproduce();
 
-    public <E extends Entity> Optional<E> findClosest(List<E> targets){
-        E closest = null;
-        double minDist = Double.MAX_VALUE;
+    public double distanceTo(Entity other){
+    return Math.hypot(getX() - other.getX(), getY() - other.getY());
+}
 
-        for (E target : targets){
-            double dist = Math.hypot(getX() - target.getX(), getY() - target.getY());
-            if (dist < minDist) {
-                minDist = dist;
-                closest = target;
-            }
-        }
-        return Optional.ofNullable(closest);
-    }
+    protected static <T extends Creature> List<T> ofType(List<? extends Creature> all, Class<T> type){
+        return all.stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .collect(Collectors.toList());
+}
+
+    public <E extends Entity> Optional<E> findClosest(List<E> targets){
+        return findClosest(targets.stream());
+}
+
+    public <E extends Entity> Optional<E> findClosest(Stream<E> targets){
+        return targets.min(Comparator.comparingDouble(this::distanceTo));
+}
 
     public int getSpeed(){
         return speed;
@@ -112,13 +119,8 @@ public abstract class Creature extends Entity {
     }
 
     protected <E extends Creature> Optional<E> findNearestInRange(List<E> candidates, int range) {
-        List<E> withinRange = new ArrayList<>();
-        for (E c : candidates) {
-            if (Math.hypot(getX() - c.getX(), getY() - c.getY()) <= range) {
-                withinRange.add(c);
-            }
-        }
-        return findClosest(withinRange);
+        return findClosest(candidates.stream().filter(c -> distanceTo(c) <= range));
+        
     }
     
 }
