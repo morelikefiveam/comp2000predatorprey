@@ -43,6 +43,8 @@ public class Prey extends Creature {
     }
 
     private static final int GRAZE_THRESHOLD = 60;
+    private static final int HERD_RANGE = 150;
+    private static final int HERD_COMFORT = 40;
 
     @Override
     public void movement() {
@@ -52,7 +54,10 @@ public class Prey extends Creature {
         if (threat.isPresent()) {
             setStrategy(MovementStrategies.flee(threat.get(), FLEE_SPEED_MULTIPLIER));
         } else if (getStarvation() < GRAZE_THRESHOLD) {
-            setStrategy(MovementStrategies.wander());
+            List<Prey> neighbours = ofType(sim, Prey.class).stream()
+                    .filter(p -> p != this && distanceTo(p) <= HERD_RANGE)
+                    .toList();
+            setStrategy(MovementStrategies.herd(neighbours, HERD_COMFORT));
         } else {
             setStrategy(findClosest(grassList.stream().filter(Grass::isEdible))
                     .map(MovementStrategies::seek)

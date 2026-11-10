@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public abstract class Creature extends Entity {
 
-    private int speed; 
+    private int speed;
     private int starvation;
     private int lastX;
     private int lastY;
@@ -35,25 +35,25 @@ public abstract class Creature extends Entity {
 
     protected abstract int getStarvationRate();
 
-    public boolean starve(){
+    public boolean starve() {
         starvation += getStarvationRate();
         return starvation >= STARVATION_THRESHOLD;
     }
 
-    protected void recordPosition(){
+    protected void recordPosition() {
         lastX = getX();
         lastY = getY();
     }
 
-    public int getVelocityX(){
+    public int getVelocityX() {
         return getX() - lastX;
     }
 
-    public int getVelocityY(){
+    public int getVelocityY() {
         return getY() - lastY;
     }
 
-    protected void moveWithBounce(){
+    protected void moveWithBounce() {
         int newX = getX() + dx * getSpeed();
         int newY = getY() + dy * getSpeed();
 
@@ -71,57 +71,59 @@ public abstract class Creature extends Entity {
     }
 
     // Keeps a creature inside the visible world after any direct setX/setY movement
-    protected void clampToWorld(){
+    protected void clampToWorld() {
         setX(Math.max(0, Math.min(getX(), WORLD_WIDTH - SIZE)));
         setY(Math.max(0, Math.min(getY(), WORLD_HEIGHT - SIZE)));
     }
 
-    public void resetStarvation(){
+    public void resetStarvation() {
         starvation = 0;
     }
 
-    protected void addStarvation(int amount){
+    protected void addStarvation(int amount) {
         starvation += amount;
     }
 
     public abstract void movement();
+
     public abstract void eat();
+
     public abstract void reproduce();
 
-    public double distanceTo(Entity other){
-    return Math.hypot(getX() - other.getX(), getY() - other.getY());
-}
+    public double distanceTo(Entity other) {
+        return Math.hypot(getX() - other.getX(), getY() - other.getY());
+    }
 
-    protected static <T extends Creature> List<T> ofType(List<? extends Creature> all, Class<T> type){
+    protected static <T extends Creature> List<T> ofType(List<? extends Creature> all, Class<T> type) {
         return all.stream()
                 .filter(type::isInstance)
                 .map(type::cast)
                 .collect(Collectors.toList());
-}
+    }
 
-    public <E extends Entity> Optional<E> findClosest(List<E> targets){
+    public <E extends Entity> Optional<E> findClosest(List<E> targets) {
         return findClosest(targets.stream());
-}
+    }
 
-    public <E extends Entity> Optional<E> findClosest(Stream<E> targets){
+    public <E extends Entity> Optional<E> findClosest(Stream<E> targets) {
         return targets.min(Comparator.comparingDouble(this::distanceTo));
-}
+    }
 
-    public int getSpeed(){
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public int getStarvation(){
+    public int getStarvation() {
         return starvation;
     }
 
     protected <E extends Creature> Optional<E> findNearestInRange(List<E> candidates, int range) {
         return findClosest(candidates.stream().filter(c -> distanceTo(c) <= range));
-        
+
     }
 
     protected void setStrategy(MovementStrategy strategy) {
@@ -132,5 +134,5 @@ public abstract class Creature extends Entity {
         strategy.move(this);
         recordPosition();
     }
-    
+
 }

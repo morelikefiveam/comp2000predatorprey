@@ -52,6 +52,7 @@ public class Simulation {
     private JPanel row3;
     private JPanel row4;
     private Dimension rowSize;
+    private PopulationGraph graph;
 
     public static void main(String[] args) throws Exception {
         List<Creature> sim = new ArrayList<>();
@@ -106,6 +107,9 @@ public class Simulation {
                 simPanel.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, Creature.WORLD_HEIGHT));
                 simPanel.setBackground(new java.awt.Color(18, 84, 13));
                 runningSim.add(simPanel, BorderLayout.CENTER);
+                graph = new PopulationGraph(sim);
+                graph.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, 120));
+                runningSim.add(graph, BorderLayout.SOUTH);
 
                 runningSim.setResizable(false);
                 runningSim.pack();
@@ -251,11 +255,18 @@ public class Simulation {
         for (Grass g : grassList) {
             g.tickGrowth();
         }
+
+        if (graph != null) {
+            graph.sample();
+        }
     }
 
     public void repaint() {
         if (simPanel != null) {
             simPanel.repaint();
+        }
+        if (graph != null) {
+            graph.repaint();
         }
     }
 

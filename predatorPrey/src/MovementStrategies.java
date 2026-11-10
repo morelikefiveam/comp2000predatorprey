@@ -1,5 +1,28 @@
+import java.util.List;
+
 public final class MovementStrategies {
     private MovementStrategies() {
+    }
+
+    public static MovementStrategy herd(List<? extends Creature> neighbours, int comfortDistance) {
+        if (neighbours.isEmpty()) {
+            return wander();
+        }
+
+        int centreX = (int) neighbours.stream().mapToInt(Creature::getX).average().orElse(0);
+        int centreY = (int) neighbours.stream().mapToInt(Creature::getY).average().orElse(0);
+        Entity centre = new Entity(centreX, centreY, false);
+
+        MovementStrategy towardCentre = seek(centre);
+        MovementStrategy wander = wander();
+
+        return self -> {
+            if (self.distanceTo(centre) <= comfortDistance) {
+                wander.move(self);
+            } else {
+                towardCentre.move(self);
+            }
+        };
     }
 
     public static MovementStrategy wander() {
