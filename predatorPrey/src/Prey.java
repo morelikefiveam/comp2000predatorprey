@@ -46,55 +46,19 @@ public class Prey extends Creature {
 
     @Override
     public void movement() {
-        Optional<Predator> nearestThreat = findNearestInRange(ofType(sim, Predator.class), THREAT_RANGE);
+        Optional<Predator> threat = findNearestInRange(ofType(sim, Predator.class), THREAT_RANGE);
+        setInDanger(threat.isPresent());
 
-        if (nearestThreat.isPresent()) {
-            setInDanger(true);
-            flee(nearestThreat.get());
-            recordPosition();
-            return;
+        if (threat.isPresent()) {
+            setStrategy(MovementStrategies.flee(threat.get(), FLEE_SPEED_MULTIPLIER));
+        } else if (getStarvation() < GRAZE_THRESHOLD) {
+            setStrategy(MovementStrategies.wander());
+        } else {
+            setStrategy(findClosest(grassList.stream().filter(Grass::isEdible))
+                    .map(MovementStrategies::seek)
+                    .orElse(MovementStrategies.idle()));
         }
-        setInDanger(false);
-
-        if (getStarvation() < GRAZE_THRESHOLD) {
-            moveWithBounce();
-            recordPosition();
-            return;
-        }
-
-        Optional<Grass> target = findClosest(grassList.stream().filter(Grass::isEdible));
-        target.ifPresent(grass -> {
-            double diffX = grass.getX() - getX();
-            double diffY = grass.getY() - getY();
-            double dist = Math.hypot(diffX, diffY);
-            if (dist == 0)
-                return;
-            int moveX = (int) Math.round((diffX / dist) * getSpeed());
-            int moveY = (int) Math.round((diffY / dist) * getSpeed());
-            setX(getX() + moveX);
-            setY(getY() + moveY);
-            clampToWorld();
-        });
-
-        recordPosition();
-    }
-
-    private void flee(Creature threat) {
-        double diffX = getX() - threat.getX();
-        double diffY = getY() - threat.getY();
-        double distance = Math.hypot(diffX, diffY);
-        if (distance == 0) {
-            diffX = 1;
-            distance = 1;
-        }
-
-        double boostedSpeed = getSpeed() * FLEE_SPEED_MULTIPLIER;
-        int moveX = (int) Math.round((diffX / distance) * boostedSpeed);
-        int moveY = (int) Math.round((diffY / distance) * boostedSpeed);
-
-        setX(getX() + moveX);
-        setY(getY() + moveY);
-        clampToWorld();
+        applyStrategy();
     }
 
     @Override

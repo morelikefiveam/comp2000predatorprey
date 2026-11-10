@@ -13,6 +13,7 @@ public abstract class Creature extends Entity {
     private int lastY;
     private int dx;
     private int dy;
+    private MovementStrategy strategy;
 
     private static final Random random = new Random();
     private static final int STARVATION_THRESHOLD = 100;
@@ -121,6 +122,15 @@ public abstract class Creature extends Entity {
     protected <E extends Creature> Optional<E> findNearestInRange(List<E> candidates, int range) {
         return findClosest(candidates.stream().filter(c -> distanceTo(c) <= range));
         
+    }
+
+    protected void setStrategy(MovementStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    protected void applyStrategy() {
+        strategy.move(this);
+        recordPosition();
     }
     
 }
