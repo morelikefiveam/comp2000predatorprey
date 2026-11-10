@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -59,14 +58,7 @@ public class Predator extends Creature {
             return;
         }
 
-        List<Prey> preyCandidates = new ArrayList<>();
-        for (Creature c : sim) {
-            if (c instanceof Prey p) {
-                preyCandidates.add(p);
-            }
-        }
-
-        Optional<Prey> nearest = findNearestInRange(preyCandidates, DETECTION_RANGE);
+        Optional<Prey> nearest = findNearestInRange(ofType(sim, Prey.class), DETECTION_RANGE);
 
         if (nearest.isPresent()) {
             pursue(nearest.get());
@@ -75,7 +67,7 @@ public class Predator extends Creature {
         }
         recordPosition();
     }
-
+    
     private void pursue(Creature target) {
         int velX = target.getVelocityX();
         int velY = target.getVelocityY();
