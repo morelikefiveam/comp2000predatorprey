@@ -51,7 +51,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void movement() {
+    protected void chooseStrategy() {
         if (getStarvation() < HUNT_THRESHOLD) {
             setStrategy(MovementStrategies.wander());
         } else {
@@ -59,6 +59,5 @@ public class Predator extends Creature {
                     .map(prey -> MovementStrategies.pursue(prey, HUNT_SPEED_MULTIPLIER))
                     .orElse(MovementStrategies.wander()));
         }
-        applyStrategy();
     }
 }

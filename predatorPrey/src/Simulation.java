@@ -207,10 +207,13 @@ public class Simulation {
     private void startGameLoop() {
         gameTimer = new Timer(RENDER_INTERVAL_MS, e -> {
             List<Creature> snapshot = new ArrayList<>(sim);
+            snapshot.parallelStream().forEach(Creature::chooseStrategy);
+
             for (Creature c : snapshot) {
-                c.movement();
+                c.applyStrategy();
                 c.eat();
             }
+
             frameCounter++;
             if (frameCounter >= TICKS_PER_LOGIC_UPDATE) {
                 runSimulationTick();

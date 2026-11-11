@@ -47,7 +47,7 @@ public class Prey extends Creature {
     private static final int HERD_COMFORT = 40;
 
     @Override
-    public void movement() {
+    protected void chooseStrategy() {
         Optional<Predator> threat = findNearestInRange(ofType(sim, Predator.class), THREAT_RANGE);
         setInDanger(threat.isPresent());
 
@@ -63,9 +63,7 @@ public class Prey extends Creature {
                     .map(MovementStrategies::seek)
                     .orElse(MovementStrategies.idle()));
         }
-        applyStrategy();
     }
-
     @Override
     protected int getStarvationRate() {
         if (isInDanger()) {
