@@ -1,3 +1,4 @@
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ public abstract class Creature extends Entity {
     private int dx;
     private int dy;
     private MovementStrategy strategy;
+    private boolean alive = true;
 
     private static final Random random = new Random();
     private static final int STARVATION_THRESHOLD = 100;
@@ -80,11 +82,24 @@ public abstract class Creature extends Entity {
         starvation = 0;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void kill() {
+        alive = false;
+    }
+
     protected void addStarvation(int amount) {
         starvation += amount;
     }
 
-    public abstract void movement();
+    protected abstract void chooseStrategy();
+
+    public void movement() {
+        chooseStrategy();
+        applyStrategy();
+    }
 
     public abstract void eat();
 
