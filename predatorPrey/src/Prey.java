@@ -36,7 +36,7 @@ public class Prey extends Creature {
             throw new IllegalStateException("Cannot reproduce: no simulation list assigned");
         }
         if (getStarvation() <= REPRODUCE_THRESHOLD && random.nextDouble() < REPRODUCE_CHANCE) {
-            Prey offspring = new Prey(getSpeed(), 0, getX(), getY(), sim, grassList);
+            Prey offspring = new Prey(mutatedSpeed(), 0, getX(), getY(), sim, grassList);
             sim.add(offspring);
             addStarvation(REPRODUCE_THRESHOLD);
         }

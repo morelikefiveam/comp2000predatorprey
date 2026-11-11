@@ -20,6 +20,12 @@ public abstract class Creature extends Entity {
     private static final Random random = new Random();
     private static final int STARVATION_THRESHOLD = 100;
 
+
+    private static final int BASE_SPEED = 5;
+    private static final int MIN_SPEED = 2;
+    private static final int MAX_SPEED = 9;
+    private static final double METABOLIC_STEP = 0.25;
+
     // Sets world size, shares with rendering
     public static final int WORLD_WIDTH = 1500;
     public static final int WORLD_HEIGHT = 800;
@@ -38,8 +44,20 @@ public abstract class Creature extends Entity {
     protected abstract int getStarvationRate();
 
     public boolean starve() {
-        starvation += getStarvationRate();
+        starvation += Math.max(0, getStarvationRate() + metabolicAdjustment());
         return starvation >= STARVATION_THRESHOLD;
+    }
+
+    private int metabolicAdjustment() {
+        int delta = speed - BASE_SPEED;
+        double chance = Math.min(1.0, Math.abs(delta) * METABOLIC_STEP);
+        return random.nextDouble() < chance ? Integer.signum(delta) : 0;
+    }
+
+// Offspring speed: the parent's speed nudged by -1, 0 or +1
+    protected int mutatedSpeed() {
+        int mutated = speed + random.nextInt(3) - 1;
+        return Math.max(MIN_SPEED, Math.min(MAX_SPEED, mutated));
     }
 
     protected void recordPosition() {

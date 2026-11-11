@@ -34,7 +34,7 @@ public class Predator extends Creature {
             if (dist <= EAT_RADIUS) {
                 sim.remove(prey);
                 prey.kill();
-                resetStarvation();
+                resetStarvation();  
             }
         });
     }
@@ -45,7 +45,7 @@ public class Predator extends Creature {
             throw new IllegalStateException("Cannot reproduce: no simulation list assigned");
         }
         if (getStarvation() <= REPRODUCE_THRESHOLD && random.nextDouble() < REPRODUCE_CHANCE) {
-            Predator offspring = new Predator(getSpeed(), 0, getX(), getY(), sim);
+            Predator offspring = new Predator(mutatedSpeed(), 0, getX(), getY(), sim);
             sim.add(offspring);
             addStarvation(REPRODUCE_THRESHOLD);
         }
