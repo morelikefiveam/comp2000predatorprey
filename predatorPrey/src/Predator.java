@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -29,19 +28,13 @@ public class Predator extends Creature {
             return;
         }
 
-        List<Prey> preyCandidates = new ArrayList<>();
-        for (Creature c : sim) {
-            if (c instanceof Prey p) {
-                preyCandidates.add(p);
-            }
-        }
-
-        Optional<Prey> closest = findClosest(preyCandidates);
+        Optional<Prey> closest = findClosest(ofType(sim, Prey.class));
         closest.ifPresent(prey -> {
             double dist = Math.hypot(getX() - prey.getX(), getY() - prey.getY());
-            if (dist <= EAT_RADIUS){
+            if (dist <= EAT_RADIUS) {
                 sim.remove(prey);
-                resetStarvation();
+                prey.kill();
+                resetStarvation();  
             }
         });
     }
@@ -52,64 +45,20 @@ public class Predator extends Creature {
             throw new IllegalStateException("Cannot reproduce: no simulation list assigned");
         }
         if (getStarvation() <= REPRODUCE_THRESHOLD && random.nextDouble() < REPRODUCE_CHANCE) {
-            Predator offspring = new Predator(getSpeed(), 0, getX(), getY(), sim);
+            Predator offspring = new Predator(mutatedSpeed(), 0, getX(), getY(), sim);
             sim.add(offspring);
             addStarvation(REPRODUCE_THRESHOLD);
         }
     }
 
     @Override
-    public void movement() {
+    protected void chooseStrategy() {
         if (getStarvation() < HUNT_THRESHOLD) {
-            moveWithBounce();
-            recordPosition();
-            return;
-        }
-
-        List<Prey> preyCandidates = new ArrayList<>();
-        for (Creature c : sim) {
-            if (c instanceof Prey p) {
-                preyCandidates.add(p);
-            }
-        }
-
-        Optional<Prey> nearest = findNearestInRange(preyCandidates, DETECTION_RANGE);
-
-        if (nearest.isPresent()) {
-            pursue(nearest.get());
+            setStrategy(MovementStrategies.wander());
         } else {
-            moveWithBounce();
+            setStrategy(findNearestInRange(ofType(sim, Prey.class), DETECTION_RANGE)
+                    .map(prey -> MovementStrategies.pursue(prey, HUNT_SPEED_MULTIPLIER))
+                    .orElse(MovementStrategies.wander()));
         }
-        recordPosition();
-    }
-
-    private void pursue(Creature target) {
-        int velX = target.getVelocityX();
-        int velY = target.getVelocityY();
-
-        double huntSpeed = getSpeed() * HUNT_SPEED_MULTIPLIER;
-
-        double distance = Math.hypot(target.getX() - getX(), target.getY() - getY());
-        if (distance == 0) return;
-
-        double lookAheadTicks = Math.min(distance / huntSpeed, 10);
-        int predictedX = target.getX() + (int) (velX * lookAheadTicks);
-        int predictedY = target.getY() + (int) (velY * lookAheadTicks);
-
-        double diffX = predictedX - getX();
-        double diffY = predictedY - getY();
-        double dist = Math.hypot(diffX, diffY);
-        if (dist == 0) return;
-
-        double moveDistance = Math.min(huntSpeed, dist);
-        int moveX = (int) Math.round((diffX / dist) * moveDistance);
-        int moveY = (int) Math.round((diffY / dist) * moveDistance);
-
-        if (moveX == 0 && Math.abs(diffX) > 0.1) moveX = (int) Math.signum(diffX);
-        if (moveY == 0 && Math.abs(diffY) > 0.1) moveY = (int) Math.signum(diffY);
-
-        setX(getX() + moveX);
-        setY(getY() + moveY);
-        clampToWorld();
     }
 }

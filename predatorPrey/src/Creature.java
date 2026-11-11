@@ -1,19 +1,30 @@
-import java.util.ArrayList;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class Creature extends Entity {
 
-    private int speed; 
+    private int speed;
     private int starvation;
     private int lastX;
     private int lastY;
     private int dx;
     private int dy;
+    private MovementStrategy strategy;
+    private boolean alive = true;
 
     private static final Random random = new Random();
     private static final int STARVATION_THRESHOLD = 100;
+
+
+    private static final int BASE_SPEED = 5;
+    private static final int MIN_SPEED = 2;
+    private static final int MAX_SPEED = 9;
+    private static final double METABOLIC_STEP = 0.25;
 
     // Sets world size, shares with rendering
     public static final int WORLD_WIDTH = 1500;
@@ -32,25 +43,37 @@ public abstract class Creature extends Entity {
 
     protected abstract int getStarvationRate();
 
-    public boolean starve(){
-        starvation += getStarvationRate();
+    public boolean starve() {
+        starvation += Math.max(0, getStarvationRate() + metabolicAdjustment());
         return starvation >= STARVATION_THRESHOLD;
     }
 
-    protected void recordPosition(){
+    private int metabolicAdjustment() {
+        int delta = speed - BASE_SPEED;
+        double chance = Math.min(1.0, Math.abs(delta) * METABOLIC_STEP);
+        return random.nextDouble() < chance ? Integer.signum(delta) : 0;
+    }
+
+// Offspring speed: the parent's speed nudged by -1, 0 or +1
+    protected int mutatedSpeed() {
+        int mutated = speed + random.nextInt(3) - 1;
+        return Math.max(MIN_SPEED, Math.min(MAX_SPEED, mutated));
+    }
+
+    protected void recordPosition() {
         lastX = getX();
         lastY = getY();
     }
 
-    public int getVelocityX(){
+    public int getVelocityX() {
         return getX() - lastX;
     }
 
-    public int getVelocityY(){
+    public int getVelocityY() {
         return getY() - lastY;
     }
 
-    protected void moveWithBounce(){
+    protected void moveWithBounce() {
         int newX = getX() + dx * getSpeed();
         int newY = getY() + dy * getSpeed();
 
@@ -68,57 +91,81 @@ public abstract class Creature extends Entity {
     }
 
     // Keeps a creature inside the visible world after any direct setX/setY movement
-    protected void clampToWorld(){
+    protected void clampToWorld() {
         setX(Math.max(0, Math.min(getX(), WORLD_WIDTH - SIZE)));
         setY(Math.max(0, Math.min(getY(), WORLD_HEIGHT - SIZE)));
     }
 
-    public void resetStarvation(){
+    public void resetStarvation() {
         starvation = 0;
     }
 
-    protected void addStarvation(int amount){
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void kill() {
+        alive = false;
+    }
+
+    protected void addStarvation(int amount) {
         starvation += amount;
     }
 
-    public abstract void movement();
-    public abstract void eat();
-    public abstract void reproduce();
+    protected abstract void chooseStrategy();
 
-    public <E extends Entity> Optional<E> findClosest(List<E> targets){
-        E closest = null;
-        double minDist = Double.MAX_VALUE;
-
-        for (E target : targets){
-            double dist = Math.hypot(getX() - target.getX(), getY() - target.getY());
-            if (dist < minDist) {
-                minDist = dist;
-                closest = target;
-            }
-        }
-        return Optional.ofNullable(closest);
+    public void movement() {
+        chooseStrategy();
+        applyStrategy();
     }
 
-    public int getSpeed(){
+    public abstract void eat();
+
+    public abstract void reproduce();
+
+    public double distanceTo(Entity other) {
+        return Math.hypot(getX() - other.getX(), getY() - other.getY());
+    }
+
+    protected static <T extends Creature> List<T> ofType(List<? extends Creature> all, Class<T> type) {
+        return all.stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .collect(Collectors.toList());
+    }
+
+    public <E extends Entity> Optional<E> findClosest(List<E> targets) {
+        return findClosest(targets.stream());
+    }
+
+    public <E extends Entity> Optional<E> findClosest(Stream<E> targets) {
+        return targets.min(Comparator.comparingDouble(this::distanceTo));
+    }
+
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public int getStarvation(){
+    public int getStarvation() {
         return starvation;
     }
 
     protected <E extends Creature> Optional<E> findNearestInRange(List<E> candidates, int range) {
-        List<E> withinRange = new ArrayList<>();
-        for (E c : candidates) {
-            if (Math.hypot(getX() - c.getX(), getY() - c.getY()) <= range) {
-                withinRange.add(c);
-            }
-        }
-        return findClosest(withinRange);
+        return findClosest(candidates.stream().filter(c -> distanceTo(c) <= range));
+
     }
-    
+
+    protected void setStrategy(MovementStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    protected void applyStrategy() {
+        strategy.move(this);
+        recordPosition();
+    }
+
 }

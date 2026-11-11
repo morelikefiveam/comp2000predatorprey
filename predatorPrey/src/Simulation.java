@@ -1,7 +1,12 @@
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,27 +16,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.FlowLayout;
-
-public class Simulation{
+public class Simulation {
 
     private static final int RENDER_INTERVAL_MS = 33;
     private static final int TICKS_PER_LOGIC_UPDATE = 9;
     private static final int GRASS_SIZE = 20; // Also affects grass amount
     private static final int GRASS_GROWTH_TIME = 1000; // Logic ticks for eaten grass to regrow
+    private static final int MAX_STARTING_POPULATION = 500;
+    private static final int GRAPH_HEIGHT = 150;
     private int frameCounter = 0;
     private final Random random = new Random();
 
     List<Creature> sim;
     List<Grass> grassList;
 
-    //Necessary JFrame stuff to make things visiable
+    // Necessary JFrame stuff to make things visiable
     private JFrame simStart;
     private JPanel panel;
     private JButton begin;
@@ -44,15 +43,13 @@ public class Simulation{
     private JLabel prey;
     private JTextField predAmount;
     private JTextField preyAmount;
-    private int entPredAmount;
-    private int entPreyAmount;
     private JLabel warning;
     private JPanel row1;
     private JPanel row2;
     private JPanel row3;
     private JPanel row4;
     private Dimension rowSize;
-
+    private PopulationGraph graph;
 
     public static void main(String[] args) throws Exception {
         List<Creature> sim = new ArrayList<>();
@@ -61,15 +58,13 @@ public class Simulation{
         mainSim.frameInitialise();
     }
 
-
-
-    public Simulation(List<Creature> sim){ //Our JFrame simulation constructor
+    public Simulation(List<Creature> sim) { // Our JFrame simulation constructor
         this.sim = sim;
-        this.grassList = new ArrayList<>(); 
+        this.grassList = new ArrayList<>();
     }
 
-    public void frameInitialise(){ // How we setup the JFramse and make it work
-        
+    public void frameInitialise() { // How we setup the JFramse and make it work
+
         simStart = new JFrame("Predator, Prey Simulation");
         simStart.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         simStart.setSize(800, 700);
@@ -77,7 +72,7 @@ public class Simulation{
         simStart.setResizable(false);
 
         panel = new JPanel();
-        warning = new JLabel("DO NOT SAVE NUMBERS MULTIPLE TIMES");
+        warning = new JLabel("Enter each starting amount, then press Save");
         begin = new JButton("Start");
         pred = new JLabel("Starting predator amount");
         prey = new JLabel("Starting prey amount");
@@ -91,75 +86,67 @@ public class Simulation{
         row3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         row4 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         rowSize = new Dimension(800, 80);
-        
-        begin.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e){ // Close start frame open active/running frame
-                spawnGrass();
+        begin.addActionListener(e -> { // Close start frame open active/running frame
+            spawnGrass();
 
-                simStart.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                runningSim = new JFrame("Predator, Prey Simulation. RUNNING");
-                runningSim.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            simStart.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            runningSim = new JFrame("Predator, Prey Simulation. RUNNING");
+            runningSim.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                simStart.dispose();
-                simStart.setVisible(false);
+            simStart.dispose();
+            simStart.setVisible(false);
 
-                
-                simPanel = new SimPanel();
-                simPanel.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, Creature.WORLD_HEIGHT));
-                simPanel.setBackground(new java.awt.Color(18, 84, 13));
-                runningSim.add(simPanel, BorderLayout.CENTER);
+            simPanel = new SimPanel();
+            simPanel.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, Creature.WORLD_HEIGHT));
+            simPanel.setBackground(new java.awt.Color(18, 84, 13));
+            runningSim.add(simPanel, BorderLayout.CENTER);
 
-                runningSim.setResizable(false);
-                runningSim.pack();
-                runningSim.setLocationRelativeTo(null);
-                runningSim.setVisible(true);
+            graph = new PopulationGraph(sim);
+            graph.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, GRAPH_HEIGHT));
+            runningSim.add(graph, BorderLayout.SOUTH);
 
-                System.out.println("Button"); 
+            runningSim.setResizable(false);
+            runningSim.pack();
+            runningSim.setLocationRelativeTo(null);
+            runningSim.setVisible(true);
 
-                startGameLoop();
-            }
+            startGameLoop();
         });
-        savePred.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amount of start pred
-            public void actionPerformed(ActionEvent e){
-                String strInput = predAmount.getText();
-                int input;
-                try {
-                    input = Integer.parseInt(strInput);
-                } catch (NumberFormatException ex) {
-                    System.out.println("Invalid predator amount: " + strInput);
-                    return;
-                }
-                for(int i = 0; i < input; i++){
+
+        savePred.addActionListener(e -> { // Saves the starting predator amount
+            try {
+                int input = parseAmount(predAmount.getText(), "predator");
+                for (int i = 0; i < input; i++) {
                     int x = random.nextInt(Creature.WORLD_WIDTH - 20);
                     int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
-                    sim.add(new Predator(5, 0, x, y, sim) { });
-                    System.out.println("predator added: " + (i+1) + " times"); //Doesn't work nor my brain
+                    sim.add(new Predator(5, 0, x, y, sim));
                 }
+                warning.setText("Saved " + input + " predators");
+                savePred.setEnabled(false);
+                predAmount.setEditable(false);
+            } catch (InvalidPopulationException ex) {
+                warning.setText(ex.getMessage());
             }
         });
-        savePrey.addActionListener(new ActionListener() { // Attempts to get a button to save a value related to amount of start prey
-            public void actionPerformed(ActionEvent e){
-                String strInput = preyAmount.getText();
-                int input;
-                try {
-                    input = Integer.parseInt(strInput);
-                } catch (NumberFormatException ex) {
-                    System.out.println("Invalid prey amount: " + strInput);
-                    return;
-                }
-                for(int i = 0; i < input; i++){
+
+        savePrey.addActionListener(e -> { // Saves the starting prey amount
+            try {
+                int input = parseAmount(preyAmount.getText(), "prey");
+                for (int i = 0; i < input; i++) {
                     int x = random.nextInt(Creature.WORLD_WIDTH - 20);
                     int y = random.nextInt(Creature.WORLD_HEIGHT - 20);
                     sim.add(new Prey(5, 10, x, y, sim, grassList));
-                    System.out.println("Prey added: " + (i+1) + " Times");
                 }
+                warning.setText("Saved " + input + " prey");
+                savePrey.setEnabled(false);
+                preyAmount.setEditable(false);
+            } catch (InvalidPopulationException ex) {
+                warning.setText(ex.getMessage());
             }
         });
 
-
-        //Building the first JFrame
+        // Building the first JFrame
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(80, 20, 20, 20));
         row1.add(begin);
@@ -182,53 +169,67 @@ public class Simulation{
         panel.add(row2);
         panel.add(row3);
         panel.add(row4);
-        
+
         simStart.add(panel, BorderLayout.CENTER);
         simStart.add(panel);
         simStart.setVisible(true);
     }
 
+    private int parseAmount(String text, String label) throws InvalidPopulationException {
+        int amount;
+        try {
+            amount = Integer.parseInt(text.trim());
+        } catch (NumberFormatException e) {
+            throw new InvalidPopulationException("Starting " + label + " amount must be a whole number");
+        }
+        if (amount < 0 || amount > MAX_STARTING_POPULATION) {
+            throw new InvalidPopulationException(
+                    "Starting " + label + " amount must be between 0 and " + MAX_STARTING_POPULATION);
+        }
+        return amount;
+    }
 
-    private void spawnGrass(){
-        for (int i = 0; i < Creature.WORLD_WIDTH; i += GRASS_SIZE){
-            for (int j = 0; j < Creature.WORLD_HEIGHT ; j += GRASS_SIZE){
+    private void spawnGrass() {
+        for (int i = 0; i < Creature.WORLD_WIDTH; i += GRASS_SIZE) {
+            for (int j = 0; j < Creature.WORLD_HEIGHT; j += GRASS_SIZE) {
                 int randomGrowth = random.nextInt(GRASS_GROWTH_TIME);
                 int randomWeight = random.nextInt(20);
                 boolean isEaten = true;
-                if (randomWeight < 1) { 
+                if (randomWeight < 1) {
                     isEaten = false; // Randomly decide if the grass is eaten or not
-                } 
+                }
                 grassList.add(new Grass(i, j, randomGrowth, isEaten));
             }
-            //int x = random.nextInt(Creature.WORLD_WIDTH - 10);
-            //int y = random.nextInt(Creature.WORLD_HEIGHT - 10);
-            //grassList.add(new Grass(x, y, GRASS_GROWTH_TIME));
         }
     }
 
-    
-    private void startGameLoop(){
-        gameTimer = new Timer(RENDER_INTERVAL_MS, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e){
-                List<Creature> snapshot = new ArrayList<>(sim);
-                for (Creature c : snapshot) {
-                    c.movement();
-                    c.eat();
-                }
-                frameCounter++;
-                if (frameCounter >= TICKS_PER_LOGIC_UPDATE) {
-                    runSimulationTick();
-                    frameCounter = 0;
-                }
+    private void startGameLoop() {
+        gameTimer = new Timer(RENDER_INTERVAL_MS, e -> {
+            List<Creature> snapshot = new ArrayList<>(sim);
 
-                repaint();
+            snapshot.parallelStream().forEach(Creature::chooseStrategy);
+
+            
+            for (Creature c : snapshot) {
+                if (!c.isAlive()) {
+                    continue;
+                }
+                c.applyStrategy();
+                c.eat();
             }
+
+            frameCounter++;
+            if (frameCounter >= TICKS_PER_LOGIC_UPDATE) {
+                runSimulationTick();
+                frameCounter = 0;
+            }
+
+            repaint();
         });
         gameTimer.start();
     }
 
-    public void runSimulationTick(){ // starvation + reproduction + grass regrowth
+    public void runSimulationTick() { // starvation + reproduction + grass regrowth
         List<Creature> snapshot = new ArrayList<>(sim);
         List<Creature> toRemove = new ArrayList<>();
 
@@ -247,16 +248,25 @@ public class Simulation{
         for (Grass g : grassList) {
             g.tickGrowth();
         }
-    }
 
-    public void repaint(){
-        if (simPanel != null) {
-            simPanel.repaint();
+        if (graph != null) {
+            graph.sample();
         }
     }
 
-    // Minimal rendering: green dots for grass, blue circles for prey, red for predators.
+    public void repaint() {
+        if (simPanel != null) {
+            simPanel.repaint();
+        }
+        if (graph != null) {
+            graph.repaint();
+        }
+    }
+
+    // Minimal rendering: green dots for grass, blue circles for prey, red for
+    // predators.
     private class SimPanel extends JPanel {
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
