@@ -114,10 +114,7 @@ public abstract class Creature extends Entity {
 
     protected abstract void chooseStrategy();
 
-    public void movement() {
-        chooseStrategy();
-        applyStrategy();
-    }
+
 
     public abstract void eat();
 
