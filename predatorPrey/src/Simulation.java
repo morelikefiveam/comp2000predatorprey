@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,6 +23,7 @@ public class Simulation {
     private static final int GRASS_SIZE = 20; // Also affects grass amount
     private static final int GRASS_GROWTH_TIME = 1000; // Logic ticks for eaten grass to regrow
     private static final int MAX_STARTING_POPULATION = 500;
+    private static final int GRAPH_HEIGHT = 150;
     private int frameCounter = 0;
     private final Random random = new Random();
 
@@ -101,7 +103,7 @@ public class Simulation {
             runningSim.add(simPanel, BorderLayout.CENTER);
 
             graph = new PopulationGraph(sim);
-            graph.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, 120));
+            graph.setPreferredSize(new Dimension(Creature.WORLD_WIDTH, GRAPH_HEIGHT));
             runningSim.add(graph, BorderLayout.SOUTH);
 
             runningSim.setResizable(false);
@@ -145,7 +147,6 @@ public class Simulation {
         });
 
         // Building the first JFrame
-
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(80, 20, 20, 20));
         row1.add(begin);
@@ -205,11 +206,13 @@ public class Simulation {
     private void startGameLoop() {
         gameTimer = new Timer(RENDER_INTERVAL_MS, e -> {
             List<Creature> snapshot = new ArrayList<>(sim);
+
             snapshot.parallelStream().forEach(Creature::chooseStrategy);
 
+            
             for (Creature c : snapshot) {
-                if (!c.isAlive()){
-                    continue; 
+                if (!c.isAlive()) {
+                    continue;
                 }
                 c.applyStrategy();
                 c.eat();
@@ -263,6 +266,7 @@ public class Simulation {
     // Minimal rendering: green dots for grass, blue circles for prey, red for
     // predators.
     private class SimPanel extends JPanel {
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
