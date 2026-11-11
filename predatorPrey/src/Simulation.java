@@ -41,8 +41,6 @@ public class Simulation {
     private JLabel prey;
     private JTextField predAmount;
     private JTextField preyAmount;
-    private int entPredAmount;
-    private int entPreyAmount;
     private JLabel warning;
     private JPanel row1;
     private JPanel row2;
