@@ -1,0 +1,741 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<<
+/Producer (pypdf)
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Count 1
+/Kids [ 4 0 R ]
+>>
+endobj
+3 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+4 0 obj
+<<
+/Contents 5 0 R
+/MediaBox [ 0 0 1400 994 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 7 0 R
+/F2 8 0 R
+/F2-0 9 0 R
+/F3 10 0 R
+/F3-0 11 0 R
+/F4 12 0 R
+/F4-0 13 0 R
+/F5 14 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 2 0 R
+>>
+endobj
+5 0 obj
+<<
+/Length 12432
+>>
+stream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+0 j
+.94902 .94902 .94902 rg
+.2 .2 .2 RG
+1 w
+n 40 782 240 142 re B*
+n 40 896 m 280 896 l S
+n 40 843 m 280 843 l S
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 143.332 906 Tm (Entity) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 881 Tm (-x: int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 866 Tm (-y: int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 851 Tm (-isFood: boolean) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 820 Tm (+getX\(\): int / +getY\(\): int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 805 Tm (+setX\(int\) / +setY\(int\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 790 Tm (+isFood\(\): boolean) Tj T* ET
+.94902 .94902 .94902 rg
+.2 .2 .2 RG
+1 w
+n 40 577 240 127 re B*
+n 40 676 m 280 676 l S
+n 40 638 m 280 638 l S
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 142.99 686 Tm (Grass) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 661 Tm (-growthTimer: int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 646 Tm (-isEaten: boolean) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 615 Tm (+isEdible\(\): boolean) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 600 Tm (+setEaten\(boolean\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 44 585 Tm (+tickGrowth\(\)) Tj T* ET
+.862745 .921569 .980392 rg
+.2 .2 .2 RG
+1 w
+n 420 645 400 279 re B*
+n 420 864 m 820 864 l S
+n 420 796 m 820 796 l S
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 596.655 906 Tm (\253abstract\273) Tj T* ET
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 597.21 890 Tm (\253Context\273) Tj T* ET
+0 0 0 rg
+BT /F3 12 Tf 14.4 TL ET
+BT 1 0 0 1 595.328 874 Tm (Creature) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 849 Tm (-speed: int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 834 Tm (-starvation: int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 819 Tm (-alive: boolean) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 804 Tm (-strategy: MovementStrategy) Tj T* ET
+.760784 .368627 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 773 Tm (+starve\(\): boolean {template method}) Tj T* ET
+0 0 0 rg
+BT /F4 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 758 Tm (#getStarvationRate\(\): int {abstract step}) Tj T* ET
+.760784 .368627 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 743 Tm (+movement\(\) {template method}) Tj T* ET
+0 0 0 rg
+BT /F4 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 728 Tm (#chooseStrategy\(\) {abstract step}) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 713 Tm (#setStrategy\(MovementStrategy\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 698 Tm (#applyStrategy\(\) -> strategy.move\(this\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 683 Tm (#mutatedSpeed\(\): int) Tj T* ET
+0 0 0 rg
+BT /F4 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 668 Tm (+eat\(\)) Tj T* ET
+0 0 0 rg
+BT /F4 11 Tf 13.2 TL ET
+BT 1 0 0 1 424 653 Tm (+reproduce\(\)) Tj T* ET
+.862745 .921569 .980392 rg
+.2 .2 .2 RG
+1 w
+n 380 402 250 143 re B*
+n 380 501 m 630 501 l S
+n 380 478 m 630 478 l S
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 486.66 527 Tm (\253Client\273) Tj T* ET
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 480.328 511 Tm (Predator) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 384 486 Tm (-sim: List<Creature>) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 384 455 Tm (#chooseStrategy\(\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 384 440 Tm (#getStarvationRate\(\): int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 384 425 Tm (+eat\(\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 384 410 Tm (+reproduce\(\)) Tj T* ET
+.862745 .921569 .980392 rg
+.2 .2 .2 RG
+1 w
+n 660 372 250 173 re B*
+n 660 501 m 910 501 l S
+n 660 448 m 910 448 l S
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 766.66 527 Tm (\253Client\273) Tj T* ET
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 771.992 511 Tm (Prey) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 664 486 Tm (-inDanger: boolean) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 664 471 Tm (-sim: List<Creature>) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 664 456 Tm (-grassList: List<Grass>) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 664 425 Tm (#chooseStrategy\(\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 664 410 Tm (#getStarvationRate\(\): int) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 664 395 Tm (+eat\(\)) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 664 380 Tm (+reproduce\(\)) Tj T* ET
+.862745 .921569 .980392 rg
+.2 .2 .2 RG
+1 w
+n 1000 841 300 83 re B*
+n 1000 864 m 1300 864 l S
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 1125.265 906 Tm (\253interface\273) Tj T* ET
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 1125.82 890 Tm (\253Strategy\273) Tj T* ET
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 1096.324 874 Tm (MovementStrategy) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 1004 849 Tm (+move\(self: Creature\)) Tj T* ET
+.862745 .921569 .980392 rg
+.2 .2 .2 RG
+1 w
+n 1000 612 300 142 re B*
+n 1000 710 m 1300 710 l S
+0 0 0 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 1089.14 736 Tm (\253ConcreteStrategy factory\273) Tj T* ET
+0 0 0 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 1091.32 720 Tm (MovementStrategies) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 1004 695 Tm (+wander\(\): MovementStrategy) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 1004 680 Tm (+idle\(\): MovementStrategy) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 1004 665 Tm (+seek\(Entity\): MovementStrategy) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 1004 650 Tm (+flee\(Creature, double\): MovementStrategy) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 1004 635 Tm (+pursue\(Creature, double\): MovementStrategy) Tj T* ET
+0 0 0 rg
+BT /F1 11 Tf 13.2 TL ET
+BT 1 0 0 1 1004 620 Tm (+herd\(List<? extends Creature>, int\): MovementStrategy) Tj T* ET
+.862745 .921569 .980392 rg
+.2 .2 .2 RG
+n 40 934 16 12 re B*
+.94902 .94902 .94902 rg
+.2 .2 .2 RG
+n 260 934 16 12 re B*
+q
+1 0 0 1 40 957.4 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 5.6 Tm /F2 16 Tf 21.6 TL (Predator/Prey Simulation - Design Pattern Diagram: Strategy \(with Template Method\)) Tj T* ET
+Q
+Q
+q
+1 0 0 1 60 940.5 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 3.5 Tm /F1 10 Tf 13.5 TL (Strategy pattern participants) Tj T* ET
+Q
+Q
+q
+1 0 0 1 280 940.5 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 3.5 Tm /F1 10 Tf 13.5 TL (Supporting classes) Tj T* ET
+Q
+Q
+q
+1 0 0 1 440 940.5 cm
+q
+.760784 .368627 0 rg
+BT 1 0 0 1 0 3.5 Tm /F1 10 Tf 13.5 TL (Orange text = Template Method steps) Tj T* ET
+Q
+Q
+1 .984314 .901961 rg
+.2 .2 .2 RG
+n 40 50 420 250 re B*
+q
+1 0 0 1 48 69.25 cm
+q
+BT 1 0 0 1 0 211.75 Tm 14.85 TL /F2 11 Tf 0 0 0 rg (Strategy - roles) Tj /F1 11 Tf  T*  T* /F2 11 Tf (Strategy:) Tj /F1 11 Tf ( MovementStrategy, a functional interface with one method,) Tj T* (move\(Creature\).) Tj  T*  T* /F2 11 Tf (Concrete strategies:) Tj /F1 11 Tf ( lambdas returned by MovementStrategies \(wander, idle,) Tj T* -0.140429 Tw (seek, flee, pursue, herd\). Each captures its own target, so no class per behaviour is) Tj T* 0 Tw (needed.) Tj  T*  T* /F2 11 Tf (Context:) Tj /F1 11 Tf ( Creature holds the current strategy; applyStrategy\(\) delegates to it.) Tj  T*  T* /F2 11 Tf (Clients:) Tj /F1 11 Tf ( Predator and Prey choose a strategy at runtime in chooseStrategy\(\).) Tj  T*  T* /F5 8 Tf (setStrategy\(MovementStrategies.flee\(threat, FLEE_SPEED_MULTIPLIER\)\);) Tj  T* (applyStrategy\(\);) Tj T* ET
+Q
+Q
+1 .984314 .901961 rg
+.2 .2 .2 RG
+n 480 50 400 250 re B*
+q
+1 0 0 1 488 173.2 cm
+q
+BT 1 0 0 1 0 107.8 Tm 14.85 TL /F2 11 Tf 0 0 0 rg (Template Method \(secondary pattern\)) Tj /F1 11 Tf  T*  T* (Creature.starve\(\) fixes the algorithm \(add the rate plus a metabolic adjustment,) Tj T* (then test the threshold\) and defers getStarvationRate\(\) to subclasses: Predator) Tj T* (returns 3; Prey returns 1, doubled while fleeing.) Tj  T*  T* (Creature.movement\(\) fixes the order: chooseStrategy\(\) \(abstract step\), then) Tj T* (applyStrategy\(\).) Tj T* ET
+Q
+Q
+1 .984314 .901961 rg
+.2 .2 .2 RG
+n 900 50 400 250 re B*
+q
+1 0 0 1 908 188.05 cm
+q
+BT 1 0 0 1 0 92.95 Tm 14.85 TL /F2 11 Tf 0 0 0 rg (Game loop \(Simulation uses Creature\)) Tj /F1 11 Tf  T*  T* /F2 11 Tf (Phase 1:) Tj /F1 11 Tf ( snapshot.parallelStream\(\).forEach\(Creature::chooseStrategy\).) Tj T* (Decisions only read shared state and write the creature's own fields.) Tj  T*  T* /F2 11 Tf (Phase 2 \(sequential\):) Tj /F1 11 Tf ( applyStrategy\(\) and eat\(\), so all world changes stay on) Tj T* (one thread.) Tj T* ET
+Q
+Q
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[] 0 d
+n 420 873 m 293 873 l
+S
+[] 0 d
+1 1 1 rg
+n 280 873 m 293 879.5 l 293 866.5 l h
+B*
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[] 0 d
+n 160 704 m 160 769 l
+S
+[] 0 d
+1 1 1 rg
+n 160 782 m 166.5 769 l 153.5 769 l h
+B*
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[] 0 d
+n 505 545 m 505 632 l
+S
+[] 0 d
+1 1 1 rg
+n 505 645 m 511.5 632 l 498.5 632 l h
+B*
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[] 0 d
+n 785 545 m 785 632 l
+S
+[] 0 d
+1 1 1 rg
+n 785 645 m 791.5 632 l 778.5 632 l h
+B*
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[] 0 d
+n 820 884 m 1000 884 l
+S
+[] 0 d
+n 1000 884 m 990 879 l S
+n 1000 884 m 990 889 l S
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[4 3] 0 d
+n 1150 754 m 1150 828 l
+S
+[] 0 d
+1 1 1 rg
+n 1150 841 m 1156.5 828 l 1143.5 828 l h
+B*
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[4 3] 0 d
+n 505 402 m 505 350 l 940 350 l 940 654 l 1000 654 l
+S
+[] 0 d
+n 1000 654 m 990 649 l S
+n 1000 654 m 990 659 l S
+.2 .2 .2 RG
+1 1 1 rg
+1 w
+[4 3] 0 d
+n 910 495 m 940 495 l 940 654 l 1000 654 l
+S
+[] 0 d
+n 1000 654 m 990 649 l S
+n 1000 654 m 990 659 l S
+BT /F4 9 Tf 10.8 TL ET
+1 1 1 rg
+1 1 1 RG
+n 891.9935 879 36.013 12 re f*
+0 0 0 rg
+BT 1 0 0 1 893.9935 882 Tm (strategy) Tj T* ET
+1 1 1 rg
+1 1 1 RG
+n 1048.716 792.5 202.567 12 re f*
+0 0 0 rg
+BT 1 0 0 1 1050.716 795.5 Tm (returns lambdas implementing MovementStrategy) Tj T* ET
+1 1 1 rg
+1 1 1 RG
+n 658.2245 345 128.551 12 re f*
+0 0 0 rg
+BT 1 0 0 1 660.2245 348 Tm (uses: picks a strategy each tick) Tj T* ET
+ 
+
+Q
+
+q
+0.0 0.0 1400 994 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+1 1 1 rg
+1 1 1 RG
+n
+36 956 864 24 re
+f*
+0 0 0 rg
+BT
+/F2-0 16 Tf
+19.2 TL
+ET
+BT
+1 0 0 1 40 963.012 Tm
+(Predator\057Prey Simulation \055 Design Pattern Diagram\072 Strategy\054 Template Method and Static Factory Methods) Tj
+T*
+ET
+0.862745 0.921569 0.980392 rg
+0.862745 0.921569 0.980392 RG
+n
+422 679 396 89 re
+f*
+0.760784 0.368627 0 rg
+BT
+/F3-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 424 757.977 Tm
+(\043getStarvationRate\050\051\072 int \173abstract step\175) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F3-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 424 742.977 Tm
+(\043chooseStrategy\050\051) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 424 727.977 Tm
+(\043setStrategy\050MovementStrategy\051) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 424 712.977 Tm
+(\043applyStrategy\050\051 \055\076 strategy\056move\050this\051) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 424 697.977 Tm
+(\043mutatedSpeed\050\051\072 int) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 424 682.977 Tm
+(\055metabolicAdjustment\050\051\072 int) Tj
+T*
+ET
+1 0.984314 0.901961 rg
+1 0.984314 0.901961 RG
+n
+484 172 394 31 re
+f*
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 488 191.877 Tm
+(Creature also declares chooseStrategy\050\051\054 eat\050\051 and reproduce\050\051 as abstract) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 488 177.077 Tm
+(steps that Predator and Prey implement\056) Tj
+T*
+ET
+1 1 1 rg
+1 1 1 RG
+n
+1141 827 18 13.4 re
+f*
+0.2 0.2 0.2 RG
+1 w
+[ 4 3 ] 0 d
+n
+1150 841 m
+1150 828 l
+S
+[ ] 0 d
+n
+1150 841 m
+1145 831 l
+S
+n
+1150 841 m
+1155 831 l
+S
+1 1 1 rg
+1 1 1 RG
+n
+1030 792.5 240 12 re
+f*
+0 0 0 rg
+BT
+/F3-0 9 Tf
+10.8 TL
+ET
+BT
+1 0 0 1 1044.961 795.463 Tm
+(\253creates\273 lambdas implementing MovementStrategy) Tj
+T*
+ET
+1 0.984314 0.901961 rg
+0.2 0.2 0.2 RG
+1 w
+n
+40 425.6 328 118.4 re
+B*
+0 0 0 rg
+BT
+/F2-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 48 524.977 Tm
+(Static factory methods \050supporting pattern\051) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 48 495.277 Tm
+(MovementStrategies creates every strategy through a static) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 48 480.477 Tm
+(method\054 so Predator and Prey never see how a strategy is built\056) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F1-0 11 Tf
+13.2 TL
+ET
+BT
+1 0 0 1 48 465.677 Tm
+(Each method returns a lambda that captures its target\056) Tj
+T*
+ET
+0 0 0 rg
+BT
+/F4-0 7.5 Tf
+9 TL
+ET
+BT
+1 0 0 1 48 439.555 Tm
+(setStrategy\050MovementStrategies\056pursue\050prey\054 HUNT\137SPEED\137MULTIPLIER\051\051\073) Tj
+T*
+ET
+Q
+
+
+endstream
+endobj
+6 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+7 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+8 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+9 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+10 0 obj
+<<
+/BaseFont /Helvetica-BoldOblique
+/Encoding /WinAnsiEncoding
+/Name /F3
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+11 0 obj
+<<
+/BaseFont /Helvetica-Oblique
+/Encoding /WinAnsiEncoding
+/Name /F3
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+12 0 obj
+<<
+/BaseFont /Helvetica-Oblique
+/Encoding /WinAnsiEncoding
+/Name /F4
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+13 0 obj
+<<
+/BaseFont /Courier
+/Encoding /WinAnsiEncoding
+/Name /F4
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+14 0 obj
+<<
+/BaseFont /Courier
+/Encoding /WinAnsiEncoding
+/Name /F5
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+xref
+0 15
+0000000000 65535 f 
+0000000015 00000 n 
+0000000054 00000 n 
+0000000113 00000 n 
+0000000162 00000 n 
+0000000467 00000 n 
+0000012952 00000 n 
+0000013059 00000 n 
+0000013166 00000 n 
+0000013278 00000 n 
+0000013390 00000 n 
+0000013510 00000 n 
+0000013626 00000 n 
+0000013742 00000 n 
+0000013848 00000 n 
+trailer
+<<
+/Size 15
+/Root 3 0 R
+/Info 1 0 R
+>>
+startxref
+13954
+%%EOF
