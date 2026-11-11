@@ -210,6 +210,9 @@ public class Simulation {
             snapshot.parallelStream().forEach(Creature::chooseStrategy);
 
             for (Creature c : snapshot) {
+                if (!c.isAlive()){
+                    continue; 
+                }
                 c.applyStrategy();
                 c.eat();
             }

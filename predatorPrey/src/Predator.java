@@ -33,6 +33,7 @@ public class Predator extends Creature {
             double dist = Math.hypot(getX() - prey.getX(), getY() - prey.getY());
             if (dist <= EAT_RADIUS) {
                 sim.remove(prey);
+                prey.kill();
                 resetStarvation();
             }
         });
